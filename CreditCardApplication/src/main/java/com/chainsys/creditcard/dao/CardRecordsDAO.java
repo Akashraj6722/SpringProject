@@ -4,24 +4,24 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.chainsys.creditcard.model.AccountDetails;
-import com.chainsys.creditcard.model.CreditCardDetails;
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.Account;
+import com.chainsys.creditcard.model.CreditCard;
+import com.chainsys.creditcard.model.User;
 import com.chainsys.creditcard.model.Transactions;
 
 @Repository
 public interface CardRecordsDAO {
 
-	public void insert(CreditCardDetails card, UserDetails details, AccountDetails bankDetails);
+	public void insert(CreditCard CreditCard, User user, Account account);
 
-	public void update(CreditCardDetails card, UserDetails details);
+	public void update(CreditCard CreditCard, User user);
 
-	public List<CreditCardDetails> read();
+	public List<CreditCard> read();
 
-	public boolean check(CreditCardDetails card);
+	public boolean check(CreditCard CreditCard);
 
-	public boolean checkPayment(Transactions trans, int cvv);
+	public boolean checkPayment(Transactions transactions, int cvv);
 	
-	public  List<CreditCardDetails> display(CreditCardDetails card);
+	public  List<CreditCard> display(CreditCard CreditCard);
 
 }

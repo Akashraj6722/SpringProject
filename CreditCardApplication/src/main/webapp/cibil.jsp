@@ -12,8 +12,8 @@
 <%
  HttpSession sess = request.getSession();
 
- 		ArrayList<UserDetails> values1 = (ArrayList<UserDetails>) sess.getAttribute("values");
- 		for (UserDetails display : values1) {
+  		ArrayList<User> values1 = (ArrayList<User>) sess.getAttribute("values");
+  		for (User display : values1) {
  %>		
 		
 <div class="form-container">

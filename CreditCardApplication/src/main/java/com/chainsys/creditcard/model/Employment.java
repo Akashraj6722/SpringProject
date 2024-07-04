@@ -3,7 +3,7 @@ package com.chainsys.creditcard.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmploymentDetails {
+public class Employment {
 	
 	String occupation;
 	String companyname;

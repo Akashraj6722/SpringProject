@@ -1,8 +1,18 @@
+<%@page import="ch.qos.logback.core.net.SyslogOutputStream"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@page import="org.springframework.context.annotation.Bean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="com.chainsys.model.Details"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.chainsys.creditcard.model.User"%>
+<%@ page import="com.chainsys.creditcard.dao.UserRecordsDAO"%>
+<%@ page import="com.chainsys.creditcard.dao.UserRecordsImpl"%>
+
+<%@ page  import="org.springframework.context.ApplicationContext"%> 
+<%@ page  import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page  import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,16 +24,18 @@
 </head>
 <body>
 	<%
-	if (session == null || session.getAttribute("email") == null) {
-		response.sendRedirect("MainPage.jsp");
-	}
+	
+	
+	if (session == null || session.getAttribute("userDetails") == null) {
+			response.sendRedirect("mainPage.jsp");
+		}
 
-	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "0");
 	%>
 	<%
-	UserDetails details = new UserDetails();
+	
 	%>
 	<div class="header">
 
@@ -36,14 +48,16 @@
 
 		<a href="#home"><i class="fa-solid fa-house"></i>Home</a>
 
-		<form action="LoginServlet" method="get">
-			<button class="btn btn secondary" value="submit"><i class="fa-solid fa-file-invoice"></i>Account
+	 <form action="accountDetails" method="post">
+			<button class="sideButton" value="submit"><i class="fa-solid fa-file-invoice"></i>Account
 				Details</button>
 
 		</form>
 
+		<!-- <a href="accountDetails.jsp"><i class="fa-solid fa-file-invoice"></i>Account
+				Details</a> -->
 
-		<a href="CardPage.jsp"><i class="fa-regular fa-credit-card"></i>Apply Credit Card</a>
+		<a href="cardPage.jsp"><i class="fa-regular fa-credit-card"></i>Apply Credit Card</a>
  		
  		
 		 <a href="SetPin.jsp"><i class="fa-solid fa-key"></i>Set
@@ -52,52 +66,70 @@
 	    <a href="Cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
 	    <a href="Shopping.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
 	    <form action="ShopServlet" method="get">
-			<button type="submit" value="submit"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</button>
+			<button class="sideButton" type="submit" value="submit"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</button>
 
 		</form>
 		<a href="#contact"><i class="fa-solid fa-tty"></i>Contact</a>
 
 		<form action="LogoutServlet" method="post">
-			<button type="submit" value="submit"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+			<button class="sideButton" value="submit"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
 
 		</form>
 
 	</div>
 	<%
-	HttpSession sessio = request.getSession();
-	%>
-	<%
-	ArrayList<UserDetails> values1 = (ArrayList<UserDetails>) sessio.getAttribute("values");
-		for (UserDetails display : values1) {
+	HttpSession sess = request.getSession();
+	User user = (User) request.getAttribute("userDetails");
+ 	
+
+	System.out.println("mail from jsp ---> " + user.getMail());
+	
+	 ServletContext servletContext = getServletContext();
+     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
+     UserRecordsImpl userRecordsImpl= (UserRecordsImpl) context.getBean("userRecordsImpl");
+
+	
+	List<User> values1 =userRecordsImpl.read(user.getMail());
+	
+	for (User display : values1) {
 	%>
 
 
 	<div class="main-content">
 		<div class="card">
-			<div class="card-header">Name</div>
+			<div class="card-header"><b>Name</b></div>
 			<div class="card-content"><%=display.getfName()%>
 				<%=display.getlName()%></div>
 		</div>
 
 		<div class="card">
-			<div class="card-header">Customer Id</div>
+			<div class="card-header"><b>Customer Id</b></div>
 			<div class="card-content"><%=display.getCustomerID()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">Aadhaar Number</div>
+			<div class="card-header"><b>Aadhaar Number</b></div>
 			<div class="card-content"><%=display.getAadhaar()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">PAN</div>
+			<div class="card-header"><b>PAN</b></div>
 			<div class="card-content"><%=display.getPan()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">Phone Number</div>
+			<div class="card-header"><b>Phone Number</b></div>
 			<div class="card-content"><%=display.getPhone()%></div>
+			<input type="hidden" value=<%=display.getPhone()%>>
+			<button class="editButton" type="submit" value="Edit"></button>
+		</div>
+		<div class="card">
+			<div class="card-header"><b>Email</b></div>
+			<div class="card-content"><%=display.getMail()%></div>
+			<button class="editButton" type="submit" value="Edit"></button>
 		</div>
 		<%
 		}
-		%>
+/* 	}
+ */		%>
 	</div>
 	<%-- <% ArrayList<Details> info=(ArrayList<Details>)request.getAttribute("info"); 
 	request.setAttribute("info1", info);
@@ -135,7 +167,8 @@ body, html {
 	margin-left:50px;
 }
 
-button {
+
+.sideButton {
 	height: 60px;
 	/* margin-left:12px; */
 	font-size: 17px;
@@ -149,7 +182,7 @@ button {
 	padding: 15px 20px;
 }
 
-button:hover {
+.sideButton:hover {
 	background-color: #575757;
 }
 
@@ -201,10 +234,6 @@ button:hover {
 	font-size: 16px;
 }
 
-
-.button:hover {
-	background-color: #005f73;
-}
 
 @media screen and (max-width: 768px) {
 	.sidebar {

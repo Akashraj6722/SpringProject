@@ -3,7 +3,7 @@ package com.chainsys.creditcard.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountDetails {
+public class Account {
 	
 	String accountNumber;
 	String ifsc;

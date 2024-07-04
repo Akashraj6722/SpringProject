@@ -4,19 +4,19 @@ import java.util.List;
 
 
 
-import com.chainsys.creditcard.model.AccountDetails;
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.Account;
+import com.chainsys.creditcard.model.User;
 
 
 
 public interface AccountRecordsDAO {
 	
-	public void insert(UserDetails details, AccountDetails bankDetails);
+	public void insert(User user, Account account);
 	
-	public  List<AccountDetails> read(UserDetails details, AccountDetails bankDetails);
+	public  List<Account> read( Account account,int id);
 	
-	public  void insertCibil(UserDetails details, AccountDetails bankDetails);
+	public  void insertCibil(User user, Account account);
 	
-	public  boolean check(UserDetails details, AccountDetails bankDetails);
+	public  boolean check(User user, Account account);
 
 }

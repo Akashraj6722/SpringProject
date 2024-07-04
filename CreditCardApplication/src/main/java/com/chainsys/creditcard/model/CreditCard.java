@@ -3,7 +3,7 @@ package com.chainsys.creditcard.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreditCardDetails {
+public class CreditCard {
 	
 	int id;
 	String accountNumber;

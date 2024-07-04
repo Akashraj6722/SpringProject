@@ -4,15 +4,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.User;
 
 public class IdMapper implements RowMapper<Integer> {
 
 	@Override
 	public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		UserDetails userDetails=new UserDetails();
+		User userDetails=new User();
 		
 		int id=Integer.parseInt(rs.getString("id"));
 		

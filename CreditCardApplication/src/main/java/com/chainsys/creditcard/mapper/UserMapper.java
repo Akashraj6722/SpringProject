@@ -4,30 +4,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.User;
 
-public class UserMapper implements RowMapper<UserDetails> {
+public class UserMapper implements RowMapper<User> {
 
 	@Override
-	public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		UserDetails userDetails=new UserDetails();
+		User user=new User();
 		
-		userDetails.setfName(rs.getString("first_name"));
-		userDetails.setlName(rs.getString("last_name"));
-		userDetails.setDob(rs.getString("dob"));
-		userDetails.setAadhaar(rs.getString("aadhaar_number"));
-		userDetails.setPan(rs.getString("pan_number"));
-		userDetails.setMail(rs.getString("email_id"));
-		userDetails.setPhone(rs.getString("phone_number"));
-		userDetails.setPassword(rs.getString("password"));
+		user.setCustomerID(rs.getInt("id"));
+		user.setfName(rs.getString("first_name"));
+		user.setlName(rs.getString("last_name"));
+		user.setDob(rs.getString("dob"));
+		user.setAadhaar(rs.getString("aadhaar_number"));
+		user.setPan(rs.getString("pan_number"));
+		user.setMail(rs.getString("email_id"));
+		user.setPhone(rs.getString("phone_number"));
 
-		
-		
-
-		
-		return userDetails;
+	
+		return user;
 	}
 	
 

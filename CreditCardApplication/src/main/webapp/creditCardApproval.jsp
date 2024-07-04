@@ -35,12 +35,12 @@
 
 		</tr>
 		<%
-		ArrayList<CreditCardDetails> list = (ArrayList<CreditCardDetails>) request.getAttribute("values");
-		ArrayList<byte[]> imageList = (ArrayList<byte[]>) request.getAttribute("incomeProof");
+		ArrayList<CreditCard> list = (ArrayList<CreditCard>) request.getAttribute("values");
+				ArrayList<byte[]> imageList = (ArrayList<byte[]>) request.getAttribute("incomeProof");
 
-		if (list != null && imageList != null) {
+				if (list != null && imageList != null) {
 			for (int i = 0; i < list.size(); i++) {
-				CreditCardDetails cardDetails = list.get(i);
+				CreditCard cardDetails = list.get(i);
 				String base64Image = "";
 
 				if (i < imageList.size()) {

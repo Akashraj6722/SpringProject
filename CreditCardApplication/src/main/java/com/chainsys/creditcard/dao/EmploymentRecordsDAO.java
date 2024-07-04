@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.chainsys.creditcard.model.UserDetails;
-import com.chainsys.creditcard.model.EmploymentDetails;
+import com.chainsys.creditcard.model.User;
+import com.chainsys.creditcard.model.Employment;
 
 
 @Repository
 public interface EmploymentRecordsDAO {
 	
-	public void insert(EmploymentDetails employment, UserDetails details);
+	public void insert(Employment employment, User user);
 	
 	public  List<byte[]> read();
 

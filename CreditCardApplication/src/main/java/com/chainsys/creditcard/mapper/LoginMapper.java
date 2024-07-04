@@ -5,14 +5,14 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.User;
 
-public class LoginMapper implements RowMapper<UserDetails>{
+public class LoginMapper implements RowMapper<User>{
 
 	@Override
-	public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-		UserDetails userDetails=new UserDetails();
+		User userDetails=new User();
 
 		userDetails.setMail(rs.getString("email_id"));
 		userDetails.setPassword(rs.getString("password"));

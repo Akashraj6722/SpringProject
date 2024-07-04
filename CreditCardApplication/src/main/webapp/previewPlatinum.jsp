@@ -11,11 +11,11 @@
 </head>
 <body>
 <body>
-<% 
-CreditCardDetails preview = new CreditCardDetails();
+<%
+CreditCard preview = new CreditCard();
 
-ArrayList<CreditCardDetails> list=(ArrayList<CreditCardDetails>)request.getAttribute("values");
-for(CreditCardDetails list1:list){
+ArrayList<CreditCard> list=(ArrayList<CreditCard>)request.getAttribute("values");
+for(CreditCard list1:list){
 	
 	String numberString=list1.getCardNumber();
 
@@ -36,7 +36,6 @@ for(CreditCardDetails list1:list){
         System.out.println("Part 2: " + part2);
         System.out.println("Part 3: " + part3);
         System.out.println("Part 4: " + part4);
-        
 %>
 <div class="nav" style="background-color: rgb(20, 136, 236);">
 

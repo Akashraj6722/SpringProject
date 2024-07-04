@@ -1,8 +1,15 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="com.chainsys.model.BankDetails"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.chainsys.creditcard.dao.AccountRecordsImpl"%>
+<%@ page import="com.chainsys.creditcard.model.User"%>
+
+<%@ page import="com.chainsys.creditcard.model.Account"%>
+<%@ page  import="org.springframework.context.ApplicationContext"%> 
+<%@ page  import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page  import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,17 +22,15 @@
 </head>
 <body>
 	<%
-	if (session == null || session.getAttribute("email") == null) {
-		response.sendRedirect("MainPage.jsp");
-	}
+	if (session == null || session.getAttribute("userDetails") == null) {
+			response.sendRedirect("MainPage.jsp");
+		}
 
-	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "0");
 	%>
-	<%
-	AccountDetails bankDetails = new AccountDetails();
-	%>
+	
 	<div class="header">
      
       <a class="back"href="CustomerDetails.jsp"><i class="fa-solid fa-arrow-left-long"
@@ -59,24 +64,44 @@
 
 
 	<%
-	ArrayList<AccountDetails> values2 = (ArrayList<AccountDetails>) request.getAttribute("info");
-		for (AccountDetails number : values2) {
+	User user = new User();
+	int id=0;
+	List<User> list=(List<User>)request.getAttribute("id");
+	for(User values:list){
+		
+		id=values.getCustomerID();
+	}
+	
+    System.out.println("in accountDetails JSP"+id);   
+	Account account=new Account();
+	 ServletContext servletContext = getServletContext();
+    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
+    AccountRecordsImpl accountRecordsImpl= (AccountRecordsImpl) context.getBean("accountRecordsImpl");
+
+	
+	List<Account> info =accountRecordsImpl.read(account,id);
+			for (Account number : info) {
+				
+			    System.out.println("in accountDetailsMethod JSP"+number.getAccountNumber());   
+
+			
 	%>
 	<div class="main-content">
 		<div class="card">
-			<div class="card-header">Account Number</div>
+			<div class="card-header"><b>Account Number</b></div>
 			<div class="card-content"><%=number.getAccountNumber()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">Account Type</div>
+			<div class="card-header"><b>Account Type</b></div>
 			<div class="card-content"><%=number.getAccountType()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">IFSC Code</div>
+			<div class="card-header"><b>IFSC Code</b></div>
 			<div class="card-content"><%=number.getIfsc()%></div>
 		</div>
 		<div class="card">
-			<div class="card-header">Account Balance</div>
+			<div class="card-header"><b>Account Balance</b></div>
 			<div class="card-content"><%=number.getBalance()%></div>
 		</div>
 

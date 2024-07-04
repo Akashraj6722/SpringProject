@@ -10,28 +10,28 @@
 </head>
 <body>
 	<%
-	CreditCardDetails preview = new CreditCardDetails();
+	CreditCard preview = new CreditCard();
 
-	ArrayList<CreditCardDetails> list = (ArrayList<CreditCardDetails>) request.getAttribute("values");
-	for (CreditCardDetails list1 : list) {
+		ArrayList<CreditCard> list = (ArrayList<CreditCard>) request.getAttribute("values");
+		for (CreditCard list1 : list) {
 
-		String numberString = list1.getCardNumber();
+			String numberString = list1.getCardNumber();
 
-		if (numberString.length() == 16) {
-			String[] parts = numberString.split("(?<=\\G.{4})");
+			if (numberString.length() == 16) {
+		String[] parts = numberString.split("(?<=\\G.{4})");
 
-			//        for (int i = 0; i < 4; i++) {
-			//            System.out.println("Group " + (i + 1) + ": " + parts[i]);
-			//        }
-			String part1 = parts[0];
-			String part2 = parts[1];
-			String part3 = parts[2];
-			String part4 = parts[3];
+		//        for (int i = 0; i < 4; i++) {
+		//            System.out.println("Group " + (i + 1) + ": " + parts[i]);
+		//        }
+		String part1 = parts[0];
+		String part2 = parts[1];
+		String part3 = parts[2];
+		String part4 = parts[3];
 
-			System.out.println("Part 1: " + part1);
-			System.out.println("Part 2: " + part2);
-			System.out.println("Part 3: " + part3);
-			System.out.println("Part 4: " + part4);
+		System.out.println("Part 1: " + part1);
+		System.out.println("Part 2: " + part2);
+		System.out.println("Part 3: " + part3);
+		System.out.println("Part 4: " + part4);
 	%>
 <div class="nav" style="background-color: rgb(20, 136, 236);">
 

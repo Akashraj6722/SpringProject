@@ -9,9 +9,9 @@ import com.chainsys.creditcard.model.Transactions;
 @Repository
 public interface TransactionRecordsDAO {
 	
-	public void insert(Transactions trans);
+	public void insert(Transactions transactions);
 	
-	public List<Transactions> read(Transactions trans);
+	public List<Transactions> read(Transactions transactions);
 	
 
 }

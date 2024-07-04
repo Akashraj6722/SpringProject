@@ -3,20 +3,22 @@ package com.chainsys.creditcard.dao;
 import java.util.List;
 
 
-import com.chainsys.creditcard.model.UserDetails;
+import com.chainsys.creditcard.model.User;
 
 
 
 
 public interface UserRecordsDAO {
 	
-	public void insert(UserDetails details);
+	public void insert(User user);
 	
-	public  boolean check(UserDetails details);
+	public  boolean check(User user);
 	
-	public Integer readId(UserDetails details);
+	public List<User> read(String mail);
 	
-	public void readSpecific(UserDetails details);
+	public Integer readId(User user);
+	
+//	public void readSpecific(UserDetails details);
 	
 	public  String readMail(int id) ;
 

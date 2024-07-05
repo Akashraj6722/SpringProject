@@ -85,7 +85,7 @@
 
 				<div class="formAction">
 					<form action="AdminServlet" method="get">
-						<input type="hidden" name="action" value="update"> <input
+						<input type="hidden" name="action" value="accept"> <input
 							type="hidden" name="id" value="<%=cardDetails.getId()%>">
 						<input type="hidden" name="card"
 							value="<%=cardDetails.getCardNumber()%>">

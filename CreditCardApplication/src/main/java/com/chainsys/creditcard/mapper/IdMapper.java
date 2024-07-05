@@ -13,9 +13,8 @@ public class IdMapper implements RowMapper<Integer> {
 	@Override
 	public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		User userDetails=new User();
 		
-		int id=Integer.parseInt(rs.getString("id"));
+		int id=rs.getInt("id");
 		
 //		userDetails.setCustomerID(id);
 //		System.out.println("in ID mapper"+userDetails.getCustomerID());

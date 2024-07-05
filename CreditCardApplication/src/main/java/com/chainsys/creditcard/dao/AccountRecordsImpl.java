@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.chainsys.creditcard.mapper.AccountMapper;
-
-
+import com.chainsys.creditcard.mapper.CibilMapper;
+import com.chainsys.creditcard.mapper.CibilScoreMapper;
 import com.chainsys.creditcard.model.Account;
 import com.chainsys.creditcard.model.User;
 
@@ -33,16 +33,48 @@ public class AccountRecordsImpl implements AccountRecordsDAO {
 		String query="SELECT account_type,account_number,ifsc_code,account_balance FROM account_details WHERE customer_id=?";
 		
 		List<Account> list =  jdbcTemplate.query(query, new AccountMapper(),id);
-          System.out.println("Completed account read method");
+         System.out.println("Completed account read method");
 		return list;
+
+	}
+	
+	public Integer readCibil(User user,Account account) {
+		
+		String query="SELECT cibil_score FROM account_details WHERE customer_id=? ";
+		
+		System.out.println("reading id in readCibil"+user.getCustomerID());
+
+//		System.out.println("reading cibil inreadCibil"+account.getCibil());
+
+		return jdbcTemplate.queryForObject(query,new CibilScoreMapper(), user.getCustomerID());
 
 	}
 
 	public void insertCibil(User user, Account account) {
+		
+		String query="UPDATE account_details SET cibil_score=? WHERE customer_id=?";
+		
+		jdbcTemplate.update(query,account.getCibil(), user.getCustomerID());
+		
+		System.out.println("Updated Cibil score");
 
 	}
 
-	public boolean check(User user, Account account) {
+	public boolean checkCibil(User user, Account account) {
+		
+		String query="SELECT cibil_score FROM account_details WHERE customer_id=? ";
+		
+		System.out.println("id in checking for cibil"+user.getCustomerID());
+		
+		int cibil=jdbcTemplate.queryForObject(query,new CibilMapper(), user.getCustomerID());
+		
+		System.out.println(cibil);
+		if(cibil!=0) {
+			
+			
+			return true;
+		}
+		
 
 		return false;
 	}

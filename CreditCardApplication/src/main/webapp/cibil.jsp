@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="java.util.ArrayList"%>
-<%@ page import="com.chainsys.model.Details"%>
+<%@ page import="com.chainsys.creditcard.model.User"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +10,15 @@
 </head>
 <body> 
 <%
+
+
+/* 
+if (session == null || session.getAttribute("userDetails") == null) {
+		 response.sendRedirect("mainPage.jsp"); 
+	} */
+%>
+<%
+
  HttpSession sess = request.getSession();
 
   		ArrayList<User> values1 = (ArrayList<User>) sess.getAttribute("values");
@@ -17,7 +26,7 @@
  %>		
 		
 <div class="form-container">
-        <form action="CibilServlet" method="get">
+        <form action="cibil" method="post">
         <h1>Check Your CIBIL Score</h1>
             <label for="firstname">First Name</label>
             <input type="text" id="firstname" name="firstname" value=<%=display.getfName() %>>

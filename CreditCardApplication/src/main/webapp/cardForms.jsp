@@ -9,7 +9,7 @@
 <body>
 
 	<div class="details">
-		<form action="CardServlet" method="post" enctype="multipart/form-data">
+		<form action="occupation" method="post" enctype="multipart/form-data">
 			<h2>Credit Card Application Form</h2>
 			<div class="form-group">
 				<label for="occupation">Occupation:</label> <input type="text"

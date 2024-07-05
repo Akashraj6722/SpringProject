@@ -22,13 +22,7 @@
 </head>
 <body>
 	<%
-	if (session == null || session.getAttribute("userDetails") == null) {
-			response.sendRedirect("MainPage.jsp");
-		}
-
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Expires", "0");
+	
 	%>
 	
 	<div class="header">
@@ -50,11 +44,11 @@
 		<a href="SetPin.jsp"><i class="fa-solid fa-key"></i>Set
 			PIN For Credit Card</a> 
 	     
-	     <a href="Cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
+	     <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
 			
 		 <a href="#contact"><i class="fa-solid fa-tty"></i>Contact</a>
 
-		<form action="LogoutServlet" method="post">
+		<form action="logout" method="post">
 			<button type="submit" value="submit"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
 
 		</form>

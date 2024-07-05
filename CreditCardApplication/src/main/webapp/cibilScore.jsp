@@ -10,13 +10,23 @@
 </head>
 <body>
 
-<h1>Cibil Score is <%int cibilScore = (int) request.getAttribute("cibilScore");
+<h1>Cibil Score is 
+
+
+
+<%
+
+
+
+
+
+int cibilScore = (int) request.getAttribute("cibil");
 
  %></h1>
  <%=cibilScore %>
  
  
-<a href="CardForms.jsp"type="submit" value="submit">submit</a>
- 
+<!-- <a href="customerDetails.jsp"type="submit" value="submit">Ok</a>
+ --> 
 </body>
 </html>

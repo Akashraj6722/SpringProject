@@ -48,15 +48,15 @@
 
                     <li> <label for="aadhaar" class="aadhaar">Aadhaar Number</label></li>
                     <li><input type="text" id="aadhaar" name="aadhaar" placeholder="Enter  Aadhaar Number"
-                            pattern="[0-9]{12}" required><input type="file" name="aadhaarProof"   ></input></li><br>
+                            pattern="[0-9]{12}" required><input type="file" name="aadhaarProof" required  ></input></li><br>
 
                     <li> <label for="pan" class="pan">PAN</label> </li>
                     <li><input type="text" id="pan" name="pan" placeholder="Enter  PAN Here"
-                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" required><input type="file" name="panProof"   ></input></li><br>
+                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" required><input type="file" name="panProof" required  ></input></li><br>
 
                     <li> <label for="mail" class="mail">Email</label></li>
                     <li><input type="text" id="mail" name="mail" placeholder="Enter Your Mail-id"
-                            pattern="[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+[com]$" required></li><br>
+                            pattern="[a-zA-Z0-9+_.-]+@[gmail.]+[com]$" required></li><br>
 
                     <li> <label for="ph" class="phone">Phone Number</label></li>
                     <li><input type="tel" id="ph" name="ph" placeholder="+91" pattern="[0-9]{10}" required></li><br>

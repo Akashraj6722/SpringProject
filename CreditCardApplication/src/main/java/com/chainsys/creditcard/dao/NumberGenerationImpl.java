@@ -2,7 +2,10 @@ package com.chainsys.creditcard.dao;
 
 import java.util.Random;
 
+import org.springframework.stereotype.Repository;
 
+
+@Repository
 
 public class NumberGenerationImpl implements NumberGenerationDAO {
 

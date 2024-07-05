@@ -27,12 +27,9 @@
 	
 	
 	if (session == null || session.getAttribute("userDetails") == null) {
-			response.sendRedirect("mainPage.jsp");
+			 response.sendRedirect("mainPage.jsp"); 
 		}
 
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Expires", "0");
 	%>
 	<%
 	
@@ -63,15 +60,15 @@
 		 <a href="SetPin.jsp"><i class="fa-solid fa-key"></i>Set
 			PIN For Credit Card</a>  
 			
-	    <a href="Cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
-	    <a href="Shopping.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
+	    <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
+	    <a href="shopping.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
 	    <form action="ShopServlet" method="get">
 			<button class="sideButton" type="submit" value="submit"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</button>
 
 		</form>
 		<a href="#contact"><i class="fa-solid fa-tty"></i>Contact</a>
 
-		<form action="LogoutServlet" method="post">
+		<form action="logout" method="post">
 			<button class="sideButton" value="submit"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
 
 		</form>
@@ -119,13 +116,13 @@
 			<div class="card-header"><b>Phone Number</b></div>
 			<div class="card-content"><%=display.getPhone()%></div>
 			<input type="hidden" value=<%=display.getPhone()%>>
-			<button class="editButton" type="submit" value="Edit"></button>
-		</div>
+<!-- 			<button class="editButton" type="submit" value="Edit"></button>
+ -->		</div>
 		<div class="card">
 			<div class="card-header"><b>Email</b></div>
 			<div class="card-content"><%=display.getMail()%></div>
-			<button class="editButton" type="submit" value="Edit"></button>
-		</div>
+<!-- 			<button class="editButton" type="submit" value="Edit"></button>
+ -->		</div>
 		<%
 		}
 /* 	}

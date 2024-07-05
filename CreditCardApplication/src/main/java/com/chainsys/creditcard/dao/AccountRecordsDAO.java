@@ -17,6 +17,8 @@ public interface AccountRecordsDAO {
 	
 	public  void insertCibil(User user, Account account);
 	
-	public  boolean check(User user, Account account);
+	public Integer readCibil(User user,Account account) ;
+	
+	public  boolean checkCibil(User user, Account account);
 
 }

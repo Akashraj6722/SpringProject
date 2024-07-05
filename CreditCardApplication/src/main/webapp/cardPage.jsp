@@ -95,7 +95,7 @@
                     </ul>
                 </div><br><br>
                 <div class="apply">
-                     <form action="CibilServlet" method="post">
+                     <form action="cardApplication" method="post">
 			<button type="submit" value="submit">Apply Now</button>
                 </div>
             </div>

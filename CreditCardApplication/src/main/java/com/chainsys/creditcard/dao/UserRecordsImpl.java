@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.chainsys.creditcard.mapper.IdMapper;
 import com.chainsys.creditcard.mapper.LoginMapper;
 import com.chainsys.creditcard.mapper.UserMapper;
+import com.chainsys.creditcard.mapper.MailMapper;
+
 import com.chainsys.creditcard.model.User;
 
 
@@ -22,10 +24,10 @@ public class UserRecordsImpl implements UserRecordsDAO{
 	
 
 	public void insert(User user) {
-		String query = "INSERT INTO user_details(first_name,last_name,dob,aadhaar_number,pan_number,email_id,phone_number,password) VALUES(?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO user_details(first_name,last_name,dob,aadhaar_number,aadhaar_proof,pan_number,pan_proof,email_id,phone_number,password) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 		Object[] parameter = { user.getfName(), user.getlName(), user.getDob(),
-				user.getAadhaar(), user.getPan(),user.getMail(),user.getPhone()
+				user.getAadhaar(),user.getAadhaarProof(), user.getPan(),user.getPanProof(),user.getMail(),user.getPhone()
 				,user.getPassword()};
 		int rows = jdbcTemplate.update(query, parameter);
 
@@ -39,7 +41,7 @@ public class UserRecordsImpl implements UserRecordsDAO{
 
 		
 			User record = jdbcTemplate.queryForObject(query, new LoginMapper(), user.getMail(),
-					user.getPassword());
+            user.getPassword());
 			System.out.println("checking....");
 //			return record != null;
 		 
@@ -51,10 +53,10 @@ public class UserRecordsImpl implements UserRecordsDAO{
 	public Integer readId(User user) {
 
 
-		String query = "SELECT id FROM user_details WHERE email_id=? AND password=? ";
+		String query = "SELECT id FROM user_details WHERE email_id=?  ";
 		System.out.println("reading....");
 
-		return jdbcTemplate.queryForObject(query, new IdMapper(),user.getMail(),user.getPassword());
+		return jdbcTemplate.queryForObject(query, new IdMapper(),user.getMail()	);
 
 
 	}
@@ -81,10 +83,11 @@ public class UserRecordsImpl implements UserRecordsDAO{
 
 	public  String readMail(int id)  {
 
-		String mail = "";
+//		String mail = "";
 		
 		String query = "SELECT email_id FROM user_details WHERE id=? ";
-		return query;
+		
+		return jdbcTemplate.queryForObject(query, new MailMapper(), id);
 
 	}
 

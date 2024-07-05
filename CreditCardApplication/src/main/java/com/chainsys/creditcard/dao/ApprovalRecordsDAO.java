@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chainsys.creditcard.model.CreditCard;
 
-@Repository
+
 public interface ApprovalRecordsDAO {
 	
 	

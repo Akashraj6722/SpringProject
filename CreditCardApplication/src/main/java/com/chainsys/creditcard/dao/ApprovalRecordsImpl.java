@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
+
 import com.chainsys.creditcard.model.CreditCard;
 
+@Repository
 
 public class ApprovalRecordsImpl implements ApprovalRecordsDAO {
 	
@@ -22,7 +25,7 @@ public class ApprovalRecordsImpl implements ApprovalRecordsDAO {
 	}
 	
 
-	private ApprovalRecordsImpl() {
+	public ApprovalRecordsImpl() {
 		super();
 	}
 	

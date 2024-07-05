@@ -9,7 +9,7 @@ import com.chainsys.creditcard.model.CreditCard;
 import com.chainsys.creditcard.model.User;
 import com.chainsys.creditcard.model.Transactions;
 
-@Repository
+
 public interface CardRecordsDAO {
 
 	public void insert(CreditCard CreditCard, User user, Account account);

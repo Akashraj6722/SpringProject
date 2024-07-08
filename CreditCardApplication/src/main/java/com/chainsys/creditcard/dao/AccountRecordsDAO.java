@@ -14,6 +14,7 @@ public interface AccountRecordsDAO {
 	public void insert(User user, Account account);
 	
 	public  List<Account> read( Account account,int id);
+	public List<Account> readProfile();
 	
 	public  void insertCibil(User user, Account account);
 	

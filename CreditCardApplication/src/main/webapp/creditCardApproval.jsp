@@ -7,6 +7,8 @@
 
 <%@ page import="com.chainsys.creditcard.model.CreditCard"%>
 <%@ page import="com.chainsys.creditcard.dao.CardRecordsImpl"%>
+<%@ page import="com.chainsys.creditcard.dao.EmploymentRecordsImpl"%>
+
 
 
 <%@ page  import="org.springframework.context.ApplicationContext"%> 
@@ -37,8 +39,8 @@
 		<tr>
 			<th>Customer's ID</th>
 			<th>Account Number</th>
-<!-- 			<th>Cibil Score</th>
- -->			<th>Credit Card Number</th>
+<!-- 		<th>Cibil Score</th>
+ -->		<th>Credit Card Number</th>
 			<th>Credit Card Type</th>
 			<th>Credit Card Status</th>
 			<th>Credit Card Approval</th>
@@ -46,25 +48,25 @@
 
 		</tr>
 		<%		
+		CreditCard creditCard= new CreditCard();
 		ServletContext servletContext = getServletContext();
 	     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		  CardRecordsImpl cardRecordsImpl=(CardRecordsImpl)context.getBean("cardRecordsImpl");
 		List<CreditCard> info= cardRecordsImpl.read();
+		  EmploymentRecordsImpl employmentRecordsImpl=(EmploymentRecordsImpl)context.getBean("employmentRecordsImpl");
+		  
+
+		
+		
 		
 		for(CreditCard cardDetails:info){
+			
+			creditCard.setId(cardDetails.getId());
+			
+			  byte[] incomeProof=employmentRecordsImpl.read(creditCard);
 
-		/* List<CreditCard> list = (ArrayList<CreditCard>) request.getAttribute("values");
-			ArrayList<byte[]> imageList = (ArrayList<byte[]>) request.getAttribute("incomeProof"); */
- 
-			/* 	if (info != null && imageList != null) {
-			for (int i = 0; i < info.size(); i++) {
-				CreditCard cardDetails = info.get(i);
-				String base64Image = "";
 
-				if (i < imageList.size()) {
-			byte[] imageBytes = imageList.get(i);
-			base64Image = Base64.getEncoder().encodeToString(imageBytes);
-				} */
+	
 		%>
 
 
@@ -77,14 +79,14 @@
 			<td><%=cardDetails.getCardType()%></td>
 			<td><%=cardDetails.getCardStatus()%>
 			<td><%=cardDetails.getCardApproval()%></td>
-			<%-- <td class="incomeImg"><img
-				src="data:image/jpeg;base64,<%=base64Image%>" width=100px
-				height=100px alt="Income Proof"></td>   --%>
+			<td class="incomeImg"><img
+				src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString(incomeProof)%>" width=100px
+				height=100px alt="Income Proof"></td> 
 
 			<td> 
 
 				<div class="formAction">
-					<form action="AdminServlet" method="get">
+					<form action="cardapproval" method="post">
 						<input type="hidden" name="action" value="accept"> <input
 							type="hidden" name="id" value="<%=cardDetails.getId()%>">
 						<input type="hidden" name="card"
@@ -92,7 +94,7 @@
 						<button type="submit" value="submit">Approve</button>
 					</form>
 
-					<form action="AdminServlet" method="get">
+					<form action="cardapproval" method="post">
 						<input type="hidden" name="action" value="reject"> <input
 							type="hidden" name="id" value="<%=cardDetails.getId()%>">
 						<input type="hidden" name="card"

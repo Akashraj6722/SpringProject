@@ -30,13 +30,24 @@ public class AccountRecordsImpl implements AccountRecordsDAO {
 
 	public List<Account> read(Account account,int id) {
 		
-		String query="SELECT account_type,account_number,ifsc_code,account_balance FROM account_details WHERE customer_id=?";
-		
+		String query="SELECT customer_id,account_type,account_number,ifsc_code,account_balance FROM account_details WHERE customer_id=?";
+		System.out.println("1234"+id);
 		List<Account> list =  jdbcTemplate.query(query, new AccountMapper(),id);
          System.out.println("Completed account read method");
 		return list;
 
 	}
+	
+public List<Account> readProfile() {
+		
+		String query="SELECT customer_id, account_type,account_number,ifsc_code,account_balance FROM account_details";
+		
+		List<Account> list =  jdbcTemplate.query(query, new AccountMapper());
+         System.out.println("Completed account read method");
+		return list;
+
+	}
+	
 	
 	public Integer readCibil(User user,Account account) {
 		

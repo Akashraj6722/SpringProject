@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.chainsys.creditcard.mapper.IdMapper;
 import com.chainsys.creditcard.mapper.LoginMapper;
 import com.chainsys.creditcard.mapper.UserMapper;
+import com.chainsys.creditcard.mapper.ProfileMapper;
+
 import com.chainsys.creditcard.mapper.MailMapper;
 
 import com.chainsys.creditcard.model.User;
@@ -60,14 +62,26 @@ public class UserRecordsImpl implements UserRecordsDAO{
 
 
 	}
-	public List<User> read(String mail) {
+	public List<User> readProfile(String mail) {
 
 		String command = "SELECT id,first_name,last_name,dob,aadhaar_number,pan_number, email_id,phone_number FROM user_details WHERE email_id=?";
 		
 		System.out.println("in read details"+mail);
 
 
-		List<User> list = jdbcTemplate.query(command, new UserMapper() , mail);
+		List<User> list = jdbcTemplate.query(command, new ProfileMapper() , mail);
+       
+		System.out.println("reading details...");
+		return  list;
+
+	}
+	public List<User> read() {
+
+		String command = "SELECT id,first_name,last_name,dob,aadhaar_number,aadhaar_proof,pan_number,pan_proof, email_id,phone_number FROM user_details WHERE email_id LIKE '%gmail.com'";
+		
+
+
+		List<User> list = jdbcTemplate.query(command, new UserMapper());
        
 		System.out.println("reading details...");
 		return  list;
@@ -94,5 +108,7 @@ public class UserRecordsImpl implements UserRecordsDAO{
 	public UserRecordsImpl() {
 		super();
 	}
+
+
 
 }

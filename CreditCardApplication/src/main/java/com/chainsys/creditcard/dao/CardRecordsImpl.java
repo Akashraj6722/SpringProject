@@ -49,9 +49,12 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 
   }
   
-  public  boolean check(CreditCard CreditCard) {
+  public  boolean check(String cardNumber) {
 	  
 		String query = "SELECT credit_card_number FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved' ";
+		
+		jdbcTemplate.query(query, new CreditCardMapper(), cardNumber);
+		
 		return false;
 		
   }
@@ -82,6 +85,10 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
   
  public CardRecordsImpl() {
 	super();
+}
+
+@Override
+
 }
   
 }

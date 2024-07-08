@@ -5,6 +5,8 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Random;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chainsys.creditcard.dao.AccountRecordsDAO;
+import com.chainsys.creditcard.dao.ApprovalRecordsDAO;
 import com.chainsys.creditcard.dao.CardRecordsDAO;
 import com.chainsys.creditcard.dao.EmploymentRecordsDAO;
+import com.chainsys.creditcard.dao.MailImpl;
 import com.chainsys.creditcard.dao.NumberGenerationDAO;
 import com.chainsys.creditcard.dao.NumberGenerationImpl;
 import com.chainsys.creditcard.dao.UserRecordsDAO;
@@ -43,6 +47,8 @@ public class CreditCardController {
 	@Autowired
 	CardRecordsDAO cardRecordsDAO;
 	@Autowired
+	ApprovalRecordsDAO approvalRecordsDAO;
+	@Autowired
 	User user;
 	@Autowired
 	Account account;
@@ -58,26 +64,11 @@ public class CreditCardController {
 		return "mainPage.jsp";
 
 	}
-	@PostMapping("/admin")
-	
-	public String admin() {
-		
-		
-		return "cardApproval.jsp";
-	}
-	@PostMapping("/adminApproval")
-	
-	public String adminApproval() {
-		
-		 
-		
-		return"creditCardApproval.jsp";
-		
-	}
+
 	
 @PostMapping("/cardapproval")
 	
-	public String cardApproval(@RequestParam("action")String action ,@RequestParam("id")int id,@RequestParam("card")String cardNumber) {
+	public String cardApproval(@RequestParam("action")String action ,@RequestParam("id")int id,@RequestParam("card")String cardNumber) throws MessagingException {
 	
 	switch(action) {
 	
@@ -85,21 +76,43 @@ public class CreditCardController {
 		
 //		int id = Integer.parseInt(request.getParameter("id"));
 //	String cardNumber=request.getParameter("card");
-		String mail=userRecordsDAO.readMail(id);
+		
+	creditCard.setId(id);
+	approvalRecordsDAO.approve(creditCard);
+	
+	
+    String mail=userRecordsDAO.readMail(id);
 	String message="Your Credit Card:"+cardNumber+"has been Approved";
+	
+	MailImpl.setProperties();
+	MailImpl.setMailBody(mail, message);
+	
+	System.out.println(" Accepted mail");
+	
+	return"creditCardApproval.jsp";
+	
+	
 	
 	
 
 		
-		break;
+	case("reject"):
+		
+		creditCard.setId(id);
+	approvalRecordsDAO.reject(creditCard);
 	
-	
-     case("reject"):
     	 
     	 String retrivedmail=userRecordsDAO.readMail(id);
  	String mailMessage="Your Credit Card:"+cardNumber+"has been Rejected";
+ 	
+ 	MailImpl.setProperties();
+	MailImpl.setMailBody(retrivedmail, mailMessage);
+	
+	System.out.println("Rejected Mail");
+ 	
+ 	
 		
-		break;
+	return"creditCardApproval.jsp";
      
      
      
@@ -169,7 +182,7 @@ public class CreditCardController {
 			
 			}else {
 
-			List<User> list = userRecordsDAO.read(user.getMail());
+			List<User> list = userRecordsDAO.readProfile(user.getMail());
 			for (User values : list) {
 
 			}
@@ -177,7 +190,7 @@ public class CreditCardController {
 			session.setAttribute("userDetails", user);
 		model.addAttribute("userDetails", user);
 
-			return "customerDetails.jsp";
+			return "customerProfile.jsp";
 
 		}
 		}
@@ -207,7 +220,7 @@ public class CreditCardController {
 
 	public String account(HttpSession session, Model model) {
 
-		List<User> list = userRecordsDAO.read(user.getMail());
+		List<User> list = userRecordsDAO.readProfile(user.getMail());
 		for (User values : list) {
 
 		}
@@ -449,5 +462,20 @@ public class CreditCardController {
 	
 		return designation;
 }
+	
+	@PostMapping("/setPin")
+	
+	public String setPin(@RequestParam("cardNumber")String cardNumber,@RequestParam("pin")int pin) {
+		
+		
+		
+		
+		
+		
+		return null;
+		
+		
+		
+	}
 }
 

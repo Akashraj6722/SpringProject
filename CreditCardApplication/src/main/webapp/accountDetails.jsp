@@ -27,7 +27,7 @@
 	
 	<div class="header">
      
-      <a class="back"href="CustomerDetails.jsp"><i class="fa-solid fa-arrow-left-long"
+      <a class="back"href="CustomerProfile.jsp"><i class="fa-solid fa-arrow-left-long"
 				></i></a>
 			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
 	
@@ -36,12 +36,9 @@
 	<div class="sidebar">
 
 		<a href="#home"><i class="fa-solid fa-house"></i>Home</a>
-		<form action="CustomerDetails.jsp">
-			<button class="btn btn secondary" value="submit"><i class="fa-regular fa-user"></i>Profile</button>
-
-		</form>
-		<a href="CardPage.jsp"><i class="fa-regular fa-credit-card"></i>Apply Credit Card</a>
-		<a href="SetPin.jsp"><i class="fa-solid fa-key"></i>Set
+		<a href="customerProfile.jsp"> <i class="fa-regular fa-user"></i>Profile</a>
+		<a href="cardPage.jsp"><i class="fa-regular fa-credit-card"></i>Apply Credit Card</a>
+		<a href="setPin.jsp"><i class="fa-solid fa-key"></i>Set
 			PIN For Credit Card</a> 
 	     
 	     <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>

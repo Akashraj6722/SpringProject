@@ -56,7 +56,7 @@
 
                     <li> <label for="mail" class="mail">Email</label></li>
                     <li><input type="text" id="mail" name="mail" placeholder="Enter Your Mail-id"
-                            pattern="[a-zA-Z0-9+_.-]+@[gmail.]+[com]$" required></li><br>
+                           pattern="[a-zA-Z0-9._%+-]+@admin\.com$" required></li><br>
 
                     <li> <label for="ph" class="phone">Phone Number</label></li>
                     <li><input type="tel" id="ph" name="ph" placeholder="+91" pattern="[0-9]{10}" required></li><br>
@@ -93,7 +93,7 @@
 
             if (password != rePassword) {
 
-                alert("Passwords doesn't match");
+                alert("Passwords dont match");
                 return false;
             }
             return true;
@@ -154,7 +154,7 @@
     }
 
     body {
-        background-image: url(images/Moneymate_Bestcreditcardstudents.webp);
+        background-image: url();
         background-repeat: no-repeat;
         background-size: 1800px;
 

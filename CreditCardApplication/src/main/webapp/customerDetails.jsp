@@ -1,13 +1,17 @@
-<%@page import="ch.qos.logback.core.net.SyslogOutputStream"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
-<%@page import="org.springframework.context.annotation.Bean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
+<%@ page import="java.util.Base64"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
+
 <%@ page import="com.chainsys.creditcard.model.User"%>
-<%@ page import="com.chainsys.creditcard.dao.UserRecordsDAO"%>
-<%@ page import="com.chainsys.creditcard.dao.UserRecordsImpl"%>
+<%@ page import="com.chainsys.creditcard.model.Account"%>
+
+<%@ page import="com.chainsys.creditcard.dao. AccountRecordsImpl"%>
+<%@ page import="com.chainsys.creditcard.dao. UserRecordsImpl "%>
+
+
 
 <%@ page  import="org.springframework.context.ApplicationContext"%> 
 <%@ page  import="org.springframework.web.context.WebApplicationContext"%>
@@ -18,135 +22,108 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-	
-	
-	if (session == null || session.getAttribute("userDetails") == null) {
-			 response.sendRedirect("mainPage.jsp"); 
-		}
-
-	%>
-	<%
-	
-	%>
 	<div class="header">
-
 		
-			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+			<a href="AdminPage.jsp"><i class="fa-solid fa-arrow-left-long"
+				></i></a> <img alt="" src="images/logo-no-background.png"
+				style="width: 150px;">
 		
 
 	</div>
-	<div class="sidebar">
 
-		<a href="#home"><i class="fa-solid fa-house"></i>Home</a>
-
-	 <form action="accountDetails" method="post">
-			<button class="sideButton" value="submit"><i class="fa-solid fa-file-invoice"></i>Account
-				Details</button>
-
-		</form>
-
-		<!-- <a href="accountDetails.jsp"><i class="fa-solid fa-file-invoice"></i>Account
-				Details</a> -->
-
-		<a href="cardPage.jsp"><i class="fa-regular fa-credit-card"></i>Apply Credit Card</a>
- 		
- 		
-		 <a href="SetPin.jsp"><i class="fa-solid fa-key"></i>Set
-			PIN For Credit Card</a>  
+	<table>
+		<tr>
+			<th>Customer's ID</th>
+		    <th>Name</th>
+			<th>DOB</th>
+			<th>Aadhaar Number</th>
+		    <th>Aadhaar Proof</th> 
+			 <th>PAN</th>
+			 <th>PAN Proof</th> 
+		    <th>E-Mail</th>
+		    <th>Phone Number</th>
 			
-	    <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
-	    <a href="shopping.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
-	    <form action="ShopServlet" method="get">
-			<button class="sideButton" type="submit" value="submit"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</button>
 
-		</form>
-		<a href="#contact"><i class="fa-solid fa-tty"></i>Contact</a>
+		</tr>
+		<%		
+		User user= new User();
+		Account account= new Account();
+		ServletContext servletContext = getServletContext();
+	     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		  UserRecordsImpl userRecordsImpl=(UserRecordsImpl)context.getBean("userRecordsImpl");
 
-		<form action="logout" method="post">
-			<button class="sideButton" value="submit"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+		List<User> info= userRecordsImpl.read();
 
-		</form>
+		  
+		
+		for(User userDetails:info){
+			
+			
+			
+			  byte[] aadhaarProof=userDetails.getAadhaarProof();
+			  byte[] panProof=userDetails.getPanProof();
 
-	</div>
-	<%
-	HttpSession sess = request.getSession();
-	User user = (User) request.getAttribute("userDetails");
- 	
 
-	System.out.println("mail from jsp ---> " + user.getMail());
-	
-	 ServletContext servletContext = getServletContext();
-     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-
-     UserRecordsImpl userRecordsImpl= (UserRecordsImpl) context.getBean("userRecordsImpl");
 
 	
-	List<User> values1 =userRecordsImpl.read(user.getMail());
-	
-	for (User display : values1) {
-	%>
+		%>
 
 
-	<div class="main-content">
-		<div class="card">
-			<div class="card-header"><b>Name</b></div>
-			<div class="card-content"><%=display.getfName()%>
-				<%=display.getlName()%></div>
-		</div>
 
-		<div class="card">
-			<div class="card-header"><b>Customer Id</b></div>
-			<div class="card-content"><%=display.getCustomerID()%></div>
-		</div>
-		<div class="card">
-			<div class="card-header"><b>Aadhaar Number</b></div>
-			<div class="card-content"><%=display.getAadhaar()%></div>
-		</div>
-		<div class="card">
-			<div class="card-header"><b>PAN</b></div>
-			<div class="card-content"><%=display.getPan()%></div>
-		</div>
-		<div class="card">
-			<div class="card-header"><b>Phone Number</b></div>
-			<div class="card-content"><%=display.getPhone()%></div>
-			<input type="hidden" value=<%=display.getPhone()%>>
-<!-- 			<button class="editButton" type="submit" value="Edit"></button>
- -->		</div>
-		<div class="card">
-			<div class="card-header"><b>Email</b></div>
-			<div class="card-content"><%=display.getMail()%></div>
-<!-- 			<button class="editButton" type="submit" value="Edit"></button>
- -->		</div>
+		<tr>
+			<td><%=userDetails.getCustomerID() %></td>
+			<td><%=userDetails.getfName() %><%= "  " %><%=userDetails.getlName() %></td>
+     	    <td><%=userDetails.getDob() %></td>
+			<td><%=userDetails.getAadhaar()%></td>
+			<td class="Img"><img src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString(aadhaarProof)%>" width=100px height=100px alt="Income Proof"></td> 
+
+			 
+			<td><%=userDetails.getPan()%></td>
+			<td class="Img"><img
+				src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString(panProof)%>" width=100px
+				height=100px alt="Income Proof"></td> 
+
+			
+			
+		    <td><%=userDetails.getMail()%></td>
+		    <td><%=userDetails.getPhone() %>
+			
+
+				
+			</td>
+		</tr>
+
 		<%
 		}
-/* 	}
- */		%>
-	</div>
-	<%-- <% ArrayList<Details> info=(ArrayList<Details>)request.getAttribute("info"); 
-	request.setAttribute("info1", info);
+		
+		%>
 	
-	request.getRequestDispatcher("AccountDetails.jsp").forward(request, response);
-
- 
-      %> --%>
-
 </body>
-<style>
 
-i{
-padding-right:10px;
+<style>
+a {
+	float: left;
+	margin-top: 22px;
+	margin-left: 10px;
+	color: white;
 }
-body, html {
-	margin: 0;
-	padding: 0;
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
+
+a:hover {
+	color:black;
+}
+
+img {
+	margin-top: 4px;
+}
+
+.Img:hover {
+	scale: 2;
 }
 
 .header {
@@ -154,97 +131,73 @@ body, html {
 	color: #fff;
 	height: 75px;
 	text-align: center;
-	position: fixed;
+	position: inherit;
 	width: 100%;
+	top: 0;
 	z-index: 1000;
+	margin-top: -6px;
 }
 
 .header h1 {
 	margin-top: 6px;
-	margin-left:50px;
 }
 
+.formAction {
+	display: flex;
+	gap: 45px;
+}
 
-.sideButton {
-	height: 60px;
-	/* margin-left:12px; */
-	font-size: 17px;
-	background-color: rgb(138, 150, 174);
+* {
+	margin: 0%;
+	padding: 0%;
+	box-sizing: border-box;
+}
+
+.box {
+	margin-left: 30%;
+	margin-top: 5%;
+}
+
+body {
+	background-color: blanchedalmond;
+}
+
+table, th, td {
+	border: solid black 2px;
+	border-collapse: collapse;
+	margin-top: 40px;
+	margin-left: 20px;
+}
+
+th, td {
+	padding: 10px;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.delete {
+	padding: 10px;
 	color: white;
-	border: 0;
+	font-weight: bold;
+	background-color: red;
+	border: none;
 	cursor: pointer;
-	width: 250px;
-	height: 50px;
-	text-align: justify;
-	padding: 15px 20px;
 }
 
-.sideButton:hover {
-	background-color: #575757;
-}
-
-.sidebar {
-	height: 100%;
-	width: 250px;
-	position: fixed;
-	top: 60px;
-	left: 0;
-	background-color: rgb(138, 150, 174);
-	padding-top: 60px;
-	overflow-x: hidden;
-}
-
-.sidebar a {
-	padding: 15px 20px;
-	text-decoration: none;
-	font-size: 17px;
+.update {
+	padding: 10px;
 	color: white;
-	display: block;
+	font-weight: bold;
+	background-color: rgb(32, 219, 32);
+	border: none;
+	cursor: pointer;
 }
 
-.sidebar a:hover {
-	background-color: #575757;
-}
-
-.main-content {
-	margin-left: 260px;
-	padding: 20px;
-	padding-top: 80px;
-	background-color: #f4f4f4;
-	min-height: 100vh;
-}
-
-.card {
-	background-color: #fff;
-	padding: 20px;
-	margin: 15px 0;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-}
-
-.card-header {
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.card-content {
-	font-size: 16px;
-}
-
-
-@media screen and (max-width: 768px) {
-	.sidebar {
-		width: 100%;
-		height: auto;
-		position: relative;
-	}
-	.sidebar a {
-		float: left;
-	}
-	.main-content {
-		margin-left: 0;
-		padding-top: 140px;
-	}
+a:hover {
+	color: black;
 }
 </style>
+
 </html>

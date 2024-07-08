@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.chainsys.creditcard.model.User;
+import com.chainsys.creditcard.model.CreditCard;
 import com.chainsys.creditcard.model.Employment;
 
 
@@ -29,16 +30,22 @@ public class EmploymentRecordsImpl implements EmploymentRecordsDAO  {
         
 	}
 
-	public  List<byte[]> read() {
+	public  byte[] read(CreditCard creditCard) {
 
-		ArrayList<byte[]> list = new ArrayList<byte[]>();
-		byte[] incomeProof = null;
-		return list;
+		String query="SELECT income_proof FROM employment_details WHERE id_number=?";
+		
+		System.out.println("reading bytes"+ creditCard.getId());
+		
+
+		return jdbcTemplate.queryForObject(query, byte[].class, creditCard.getId());
+		
 
 	}
 
 public EmploymentRecordsImpl() {
 		super();
 	}
+
+
 
 }

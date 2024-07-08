@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Account {
 	
+	int id;
 	String accountNumber;
 	String ifsc;
 	String accountType;
@@ -12,6 +13,14 @@ public class Account {
 	int cibil;
 	
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getCibil() {
 		return cibil;
 	}

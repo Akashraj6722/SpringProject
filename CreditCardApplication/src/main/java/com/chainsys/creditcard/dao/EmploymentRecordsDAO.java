@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.chainsys.creditcard.model.User;
+import com.chainsys.creditcard.model.CreditCard;
 import com.chainsys.creditcard.model.Employment;
 
 
@@ -13,6 +14,6 @@ public interface EmploymentRecordsDAO {
 	
 	public void insert(Employment employment, User user);
 	
-	public  List<byte[]> read();
+	public   byte[] read(CreditCard creditCard);
 
 }

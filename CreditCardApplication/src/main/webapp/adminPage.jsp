@@ -18,19 +18,27 @@
 	</div>
 	<div class="sidebar">
 
-		<a href="AdminPage.jsp">Home</a> <a href="#contact">Contact</a> <a
-			href="MainPage.jsp">Logout</a>
+		<a href="AdminPage.jsp">Home</a>
+		<a href="adminSignup.jsp">To Add New Admin</a> 
+		 <a href="#contact">Contact</a> 
+		 <a href="MainPage.jsp">Logout</a>
+			
 
 	</div>
 
 
 	<div class="main-content">
-		<div class="card">
-			<form action="adminApproval" method="post">
-				<button class="btn btn secondary" value="submit">To
-					Approve/reject Customer's Credit Card</button>
-			</form>
+	
+	<div class="card">
+		<a href="customerDetails.jsp"> Customer's Details</a>
 		</div>
+		
+		<div class="card">
+		
+		<a href="creditCardApproval.jsp">Approve/reject Customer's Credit Card</a>
+		</div>
+		
+		
 
 	</div>
 </html>

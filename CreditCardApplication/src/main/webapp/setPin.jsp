@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form  action="PinServlet" method="post"class="set-pin-form">
+        <form  action="setPin" method="post"  onsubmit="return validatePin()" class="set-pin-form">
             <h2>Set Your PIN</h2>
              <div class="input-group">
                 <label for="cardNumber">Credit Card Number</label>
@@ -25,6 +25,28 @@
             <button type="submit">Set PIN</button>
         </form>
     </div>
+    
+     <script>
+        function validatePin() {
+
+            var pin = document.getElementsByName("pin")[0].value;
+            console.log(password);
+            var confirmPin = document.getElementsByName("confirm-pin")[0].value;
+
+            if (pin != confirmPin) {
+
+                alert("Pin doesn't match");
+                return false;
+            }
+            return true;
+
+        }
+    </script>
+    
+    
+    
+    
+    
 </body>
 
 <style>

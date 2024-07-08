@@ -14,7 +14,9 @@ public interface UserRecordsDAO {
 	
 	public  boolean check(User user);
 	
-	public List<User> read(String mail);
+	public List<User> readProfile(String mail);
+	
+	public List<User> read();
 	
 	public Integer readId(User user);
 	

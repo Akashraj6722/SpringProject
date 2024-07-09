@@ -19,6 +19,13 @@ public class CreditCard {
 	
 	
 	
+	public CreditCard(String string, int i) {
+		
+		
+	}
+	public CreditCard() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getCardStatus() {
 		return cardStatus;
 	}
@@ -87,6 +94,7 @@ public class CreditCard {
 	public void setPin(int pin) {
 		this.pin = pin;
 	}
+
 	
 	
 	

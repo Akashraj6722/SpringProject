@@ -13,9 +13,9 @@
 <%
 	
 	
-	if (session == null || session.getAttribute("userDetails") == null) {
+	/* if (session == null || session.getAttribute("userDetails") == null) {
 			 response.sendRedirect("mainPage.jsp"); 
-		}
+		} */
 
 	%>
 	<%

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.chainsys.creditcard.model.User;
 import com.chainsys.creditcard.model.CreditCard;
 import com.chainsys.creditcard.model.Employment;
+import com.chainsys.creditcard.mapper.IncomeProofMapper;
+
 
 
 @Repository
@@ -30,14 +32,16 @@ public class EmploymentRecordsImpl implements EmploymentRecordsDAO  {
         
 	}
 
-	public  byte[] read(CreditCard creditCard) {
+	public  List<Employment> read(CreditCard creditCard) {
 
 		String query="SELECT income_proof FROM employment_details WHERE id_number=?";
 		
 		System.out.println("reading bytes"+ creditCard.getId());
 		
-
-		return jdbcTemplate.queryForObject(query, byte[].class, creditCard.getId());
+		List<Employment> list=(List<Employment>)jdbcTemplate.query(query, new IncomeProofMapper(), creditCard.getId());
+		
+		return list;
+		
 		
 
 	}

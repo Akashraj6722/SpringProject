@@ -6,6 +6,8 @@
 <%@ page import="java.util.List"%>
 
 <%@ page import="com.chainsys.creditcard.model.CreditCard"%>
+<%@ page import="com.chainsys.creditcard.model.Employment"%>
+
 <%@ page import="com.chainsys.creditcard.dao.CardRecordsImpl"%>
 <%@ page import="com.chainsys.creditcard.dao.EmploymentRecordsImpl"%>
 
@@ -55,15 +57,23 @@
 		List<CreditCard> info= cardRecordsImpl.read();
 		  EmploymentRecordsImpl employmentRecordsImpl=(EmploymentRecordsImpl)context.getBean("employmentRecordsImpl");
 		  
-
-		
+byte[] incomeImage={};
+		 
 		
 		
 		for(CreditCard cardDetails:info){
 			
 			creditCard.setId(cardDetails.getId());
 			
-			  byte[] incomeProof=employmentRecordsImpl.read(creditCard);
+			 /*  byte[] incomeProof=employmentRecordsImpl.read(creditCard); */
+ List<Employment>list =employmentRecordsImpl.read(creditCard);
+			 
+			 for(Employment values:list){
+				 
+				 
+				incomeImage= values.getIncomeProof();
+			 }
+			
 
 
 	
@@ -80,7 +90,7 @@
 			<td><%=cardDetails.getCardStatus()%>
 			<td><%=cardDetails.getCardApproval()%></td>
 			<td class="incomeImg"><img
-				src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString(incomeProof)%>" width=100px
+				src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString( incomeImage)%>" width=100px
 				height=100px alt="Income Proof"></td> 
 
 			<td> 

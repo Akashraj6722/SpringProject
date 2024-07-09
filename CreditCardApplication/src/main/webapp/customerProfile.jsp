@@ -26,7 +26,7 @@
 	<%
 	
 	
-	if (session == null || session.getAttribute("userDetails") == null) {
+	if (session == null || session.getAttribute("values") == null) {
 			 response.sendRedirect("mainPage.jsp"); 
 		}
 
@@ -74,10 +74,15 @@
 	</div>
 	<%
 	HttpSession sess = request.getSession();
-	User user = (User) request.getAttribute("userDetails");
- 	
-
-	System.out.println("mail from jsp ---> " + user.getMail());
+	String mail=null;
+	/* User user = (User) request.getAttribute("userDetails");
+	System.out.println("mail from jsp ---> " + user.getMail()); */
+	
+	List<User> list =(List<User>)session.getAttribute("values");
+	for(User user:list){
+		
+		mail=user.getMail();
+	}
 	
 	 ServletContext servletContext = getServletContext();
      ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
@@ -85,7 +90,7 @@
      UserRecordsImpl userRecordsImpl= (UserRecordsImpl) context.getBean("userRecordsImpl");
 
 	
-	List<User> values1 =userRecordsImpl.readProfile(user.getMail());
+	List<User> values1 =userRecordsImpl.readProfile(mail);
 	
 	for (User display : values1) {
 	%>

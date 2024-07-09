@@ -5,8 +5,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 </head>
 <body>
+
+
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <div class="container">
         <form  action="setPin" method="post"  onsubmit="return validatePin()" class="set-pin-form">
             <h2>Set Your PIN</h2>
@@ -27,20 +31,49 @@
     </div>
     
      <script>
-        function validatePin() {
+     
+     function validatePin() {
 
-            var pin = document.getElementsByName("pin")[0].value;
-            console.log(password);
-            var confirmPin = document.getElementsByName("confirm-pin")[0].value;
+         var pin = document.getElementsByName("pin")[0].value;
+         console.log(password);
+         var confirmPin = document.getElementsByName("confirm-pin")[0].value;
 
-            if (pin != confirmPin) {
+         if (pin != confirmPin) {
 
-                alert("Pin doesn't match");
-                return false;
-            }
-            return true;
+             alert("Pin doesn't match");
+             return false;
+         }
+         return true;
 
-        }
+     }
+     <%
+     	String alert=(String)request.getAttribute("checkApproval");
+                		String message;
+                		String messageType;
+                		
+                		if(alert!=null && !alert.isEmpty()){
+                			
+                			if(alert.equals("Success")){
+                			message="Pin Set Successfully";
+                		     messageType="Success";
+                		}
+                		else{
+                			message="Your Card is Not Approved ";
+               		     messageType="Failed";
+                			
+                			
+                		}
+                			
+                			
+                		
+     %>
+    
+     Swal.fire({
+         title: 'Notification',
+         text: '<%= message %>',
+         icon: '<%= messageType %>'
+     });
+    <%}%>  
     </script>
     
     

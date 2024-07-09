@@ -95,8 +95,7 @@
                     </ul>
                 </div><br><br>
                 <div class="apply">
-                     <form action="cardApplication" method="post">
-			<button type="submit" value="submit">Apply Now</button>
+                     <a href="cardForms.jsp">Apply Now</a>
                 </div>
             </div>
 

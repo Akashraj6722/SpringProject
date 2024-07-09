@@ -14,6 +14,6 @@ public interface EmploymentRecordsDAO {
 	
 	public void insert(Employment employment, User user);
 	
-	public   byte[] read(CreditCard creditCard);
+	public   List<Employment> read(CreditCard creditCard);
 
 }

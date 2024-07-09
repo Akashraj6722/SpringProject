@@ -15,7 +15,7 @@
             <h3></h3>
             <img src="images/samantha.webp" width="250px">
             <h4>RS.1499 only</h4>
-            <form action="ShopServlet" method="post">
+            <form action="shop" method="post">
             <input type="hidden" value="1499" name="buy">
             <input type="submit" value="Buy Now">
             </form>
@@ -24,7 +24,7 @@
             <h3></h3>
             <img src="images/virat-kohli.webp" width="250px">
             <h4>RS.5999 only</h4>
-            <form action="ShopServlet" method="post">
+            <form action="shop" method="post">
             <input type="hidden" value="5999" name="buy">
             <input type="submit" value="Buy Now">
             </form>

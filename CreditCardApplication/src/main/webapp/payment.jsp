@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="com.chainsys.model.Transaction"%>
+    <%@ page import="com.chainsys.creditcard.model.Transactions"%>
     
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,7 @@
  trans.setAmount(amount);
  %>
 
-<form action="PaymentServlet" method="post">
+<form action="payment" method="post">
        <h4>Amount:</h4><%=amount %>
        <div class="form-group">
             <!-- <label for="amount">Total Amount</label> -->
@@ -23,18 +23,18 @@
         </div>
         <div class="form-group">
             <label for="card-number">Card Number</label>
-            <input type="text" id="card-number" name="cardNumber" required>
+            <input type="text" id="card-number" name="cardNumber" pattern="[0-9]{16}" required>
         </div>
         <div class="form-group">
             <label for="expiry-date">Expiry Date</label>
-            <input type="text" id="expiry-date" name="expiryDate" placeholder="MM/YY" required>
+            <input type="text" id="expiry-date" name="expiryDate" placeholder="MM/YY"  pattern="[0-9]{16}" required>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" required>
         </div>
         <input type="hidden" value="dress purchased" name="description"></input>
-        <button type="submit">Submit Payment</button>
+        <button type="submit">Pay</button>
     </form>
 </div>
 </body>

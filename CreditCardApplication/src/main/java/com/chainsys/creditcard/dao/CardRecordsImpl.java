@@ -32,9 +32,15 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 		
 }
 
-  public  void update(CreditCard CreditCard,User user)  {
+  public  void update(CreditCard creditCard,User user)  {
 		
 		String query="UPDATE credit_card_details SET credit_card_pin=? WHERE customer_id=? AND credit_card_number=?";
+		
+		System.out.println("to update pin"+creditCard.getPin()+user.getCustomerID()+creditCard.getCardNumber());
+		jdbcTemplate.update(query, creditCard.getPin(),user.getCustomerID(),creditCard.getCardNumber());
+		
+		
+		
 		
   }
   
@@ -49,15 +55,25 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 
   }
   
-  public  boolean check(String cardNumber) {
-	  
-		String query = "SELECT credit_card_number FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved' ";
-		
-		jdbcTemplate.query(query, new CreditCardMapper(), cardNumber);
-		
-		return false;
-		
-  }
+  public boolean checkCardApproval(String cardNumber) {
+	    String query = "SELECT credit_card_number FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved'";
+
+	    List<String> results = jdbcTemplate.query(query, 
+	        (rs, rowNum) -> rs.getString("credit_card_number"), 
+	        cardNumber);
+
+	    return !results.isEmpty();
+	}
+  
+  public boolean checkCardPin(String cardNumber) {
+	    String query = "SELECT credit_card_number,credit_card_pin FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved'";
+
+	    List<CreditCard> results = jdbcTemplate.query(query, 
+	            (rs, rowNum) -> new CreditCard(rs.getString("credit_card_number"), rs.getInt("credit_card_pin")), 
+	            cardNumber);
+
+	    return !results.isEmpty();
+	}
 
  public  boolean checkPayment(Transactions transactions,int cvv)  {
 	  
@@ -87,8 +103,8 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 	super();
 }
 
-@Override
+
 
 }
   
-}
+

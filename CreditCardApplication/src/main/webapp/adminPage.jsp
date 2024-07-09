@@ -35,7 +35,7 @@
 		
 		<div class="card">
 		
-		<a href="creditCardApproval.jsp">Approve/reject Customer's Credit Card</a>
+		<a href="creditCardApproval.jsp">Approve/Reject Customer's Credit Card</a>
 		</div>
 		
 		

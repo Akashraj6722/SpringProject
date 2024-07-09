@@ -2,6 +2,7 @@ package com.chainsys.creditcard.controller;
 
 import java.io.IOException;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -102,7 +103,7 @@ public class CreditCardController {
 	approvalRecordsDAO.reject(creditCard);
 	
     	 
-    	 String retrivedmail=userRecordsDAO.readMail(id);
+    String retrivedmail=userRecordsDAO.readMail(id);
  	String mailMessage="Your Credit Card:"+cardNumber+"has been Rejected";
  	
  	MailImpl.setProperties();
@@ -187,8 +188,7 @@ public class CreditCardController {
 
 			}
 			session.setAttribute("values", list);
-			session.setAttribute("userDetails", user);
-		model.addAttribute("userDetails", user);
+//		model.addAttribute("userDetails", user);
 
 			return "customerProfile.jsp";
 
@@ -465,17 +465,89 @@ public class CreditCardController {
 	
 	@PostMapping("/setPin")
 	
-	public String setPin(@RequestParam("cardNumber")String cardNumber,@RequestParam("pin")int pin) {
+	public String setPin(@RequestParam("cardNumber")String cardNumber,@RequestParam("pin")int pin,
+			HttpSession session, Model model) {
 		
 		
+		List<User> list=(List<User>) session.getAttribute("values");
 		
+		for(User values:list) {
+			
+			user.setCustomerID(values.getCustomerID());
+			System.out.println("in setPin Controller"+user.getCustomerID()); 
+			 
+			 
+		}
+		creditCard.setCardNumber(cardNumber);
+		creditCard.setPin(pin);
+		System.out.println(cardRecordsDAO.checkCardApproval(cardNumber));
+		if(cardRecordsDAO.checkCardApproval(cardNumber)==true) {
+			
+			System.out.println(cardRecordsDAO.checkCardPin(cardNumber));
+			if(cardRecordsDAO.checkCardPin(cardNumber)==false) {
+			
+			
+			model.addAttribute("checkApproval", "Success");
+			
+			cardRecordsDAO.update(creditCard, user);
+			
+			
+			return "customerProfile.jsp";
+			
+			
+			
+		}}else {
+			model.addAttribute("checkApproval", "Failed");
+
+			
+			
+		}
+	
 		
-		
-		
-		return null;
-		
-		
+		return "setPin.jsp";
 		
 	}
+	
+@PostMapping("/shop")
+	
+	public String shop(@RequestParam("buy") int amount,
+			HttpSession session, Model model) {
+	
+	   model.addAttribute("amount", amount);
+	
+				return "payment.jsp";
+	
+}
+
+@PostMapping("/payment")
+
+public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumber") int cardNumber,
+		@RequestParam("cvv") int cvv,@RequestParam("validity") String validity,
+		HttpSession session, Model model) {
+	
+	
+     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyMM");
+     
+     DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMM");
+     
+         // Parse the input date string to a YearMonth object
+         YearMonth yearMonth = YearMonth.parse(validity, inputFormatter);
+                          
+         // Format the YearMonth object to the desired output format
+         String outputDateString = yearMonth.format(outputFormatter);
+         
+         // Print the formatted date string
+         System.out.println("Formatted date: " + outputDateString);
+	
+	
+	
+
+   model.addAttribute("amount", amount);
+
+			return "payment.jsp";
+
+}
+
+
 }
 

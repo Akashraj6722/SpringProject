@@ -75,11 +75,14 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 	    return !results.isEmpty();
 	}
 
- public  boolean checkPayment(Transactions transactions,int cvv)  {
+ public  boolean checkPayment(Transactions transactions,int cvv,String validity)  {
 	  
-		String query = "SELECT credit_card_number,credit_card_cvv,credit_card_approval FROM credit_card_details WHERE credit_card_number=? AND credit_card_cvv=? AND credit_card_approval='Approved' ";
-		return false;
-	
+		String query = "SELECT credit_card_number,credit_card_cvv,credit_card_valid_till,credit_card_approval FROM credit_card_details WHERE credit_card_number=? AND credit_card_cvv=? AND credit_card_valid_till=? AND credit_card_approval='Approved' ";
+		
+		System.out.println("cardDetails in checkPayment"+ transactions.getCardNumber()+cvv+validity);
+		 List<CreditCard> results=jdbcTemplate.query(query ,(rs, rowNum) -> new CreditCard(rs.getString("credit_card_number"), rs.getInt("credit_card_cvv"),rs.getString("credit_card_valid_till"),rs.getString("credit_card_approval")), 
+	            transactions.getCardNumber(),cvv,validity);
+		 return !results.isEmpty();	
   }
  
  public  List<CreditCard> display(CreditCard creditCard) {

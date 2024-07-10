@@ -21,7 +21,7 @@ public interface CardRecordsDAO {
 	 public boolean checkCardApproval(String cardNumber) ;
 	 public boolean checkCardPin(String cardNumber);
 
-	public boolean checkPayment(Transactions transactions, int cvv);
+	 public  boolean checkPayment(Transactions transactions,int cvv,String validity) ;
 	
 	public  List<CreditCard> display(CreditCard CreditCard);
 

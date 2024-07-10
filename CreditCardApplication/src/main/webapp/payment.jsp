@@ -1,25 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="com.chainsys.creditcard.model.Transactions"%>
-    
+<%@ page import="com.chainsys.creditcard.model.Transactions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<!-- Include SweetAlert CSS and JS files -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body> 
 <%
  Transactions trans=new Transactions();
- int amount=(int)request.getAttribute("amount");
- trans.setAmount(amount);
+ int amount=(int)session.getAttribute("amount");
+ /* trans.setAmount(amount); */
  %>
 
 <form action="payment" method="post">
        <h4>Amount:</h4><%=amount %>
        <div class="form-group">
             <!-- <label for="amount">Total Amount</label> -->
-            <input type="hidden" id="amount" name="amount" value=<%=amount %>>
+            <input type="hidden" id="amount" name="amount" value="<%=amount %>">
         </div>
         <div class="form-group">
             <label for="card-number">Card Number</label>
@@ -27,16 +30,42 @@
         </div>
         <div class="form-group">
             <label for="expiry-date">Expiry Date</label>
-            <input type="text" id="expiry-date" name="expiryDate" placeholder="MM/YY"  pattern="[0-9]{16}" required>
+            <input type="text" id="expiry-date" name="validity" placeholder="YY/MM"  pattern="[0-9]{4}" required>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" required>
         </div>
-        <input type="hidden" value="dress purchased" name="description"></input>
+        <input type="hidden" value="dress purchased" name="description">
         <button type="submit">Pay</button>
     </form>
 </div>
+
+<script>
+<%
+String alert=(String) request.getAttribute("CardDetails");
+System.out.println("alert--->" + alert);
+String message = "";
+String messageType = "";
+
+if(alert != null && !alert.isEmpty()){
+    if(alert.equals("paymentSuccess")){
+        message = "Order Placed";
+        messageType = "success";
+    } else {
+        message = "Incorrect Card Details";
+        messageType = "error";
+    }
+%>
+
+Swal.fire({
+    title: 'Notification',
+    text: '<%= message %>',
+    icon: '<%= messageType %>'
+});
+
+<%}%>
+</script>
 </body>
 <style>
     body {
@@ -85,14 +114,14 @@ button {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #28a745;
+    background-color: rgb(20, 136, 236);
     color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: rgb(13, 176, 13);
 }
 
 </style>

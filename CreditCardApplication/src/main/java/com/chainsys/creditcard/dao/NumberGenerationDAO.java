@@ -18,5 +18,7 @@ public interface NumberGenerationDAO {
 	public  String rupayCreditCardNumber();
 	
 	public  String pulseCreditCardNumber() ;
+	
+	public String transactionID();
 
 }

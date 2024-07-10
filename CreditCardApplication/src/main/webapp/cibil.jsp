@@ -86,12 +86,12 @@ button {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF50;
+    background-color: #rgb(20, 136, 236);
     color: white;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #rgb(13, 176, 13);
 }
 </html>

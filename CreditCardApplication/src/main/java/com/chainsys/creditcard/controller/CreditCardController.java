@@ -1,6 +1,7 @@
 package com.chainsys.creditcard.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -23,10 +24,12 @@ import com.chainsys.creditcard.dao.EmploymentRecordsDAO;
 import com.chainsys.creditcard.dao.MailImpl;
 import com.chainsys.creditcard.dao.NumberGenerationDAO;
 import com.chainsys.creditcard.dao.NumberGenerationImpl;
+import com.chainsys.creditcard.dao.TransactionRecordsDAO;
 import com.chainsys.creditcard.dao.UserRecordsDAO;
 import com.chainsys.creditcard.model.Account;
 import com.chainsys.creditcard.model.CreditCard;
 import com.chainsys.creditcard.model.Employment;
+import com.chainsys.creditcard.model.Transactions;
 import com.chainsys.creditcard.model.User;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,6 +53,8 @@ public class CreditCardController {
 	@Autowired
 	ApprovalRecordsDAO approvalRecordsDAO;
 	@Autowired
+	TransactionRecordsDAO transactionRecordsDAO;
+	@Autowired
 	User user;
 	@Autowired
 	Account account;
@@ -57,6 +62,8 @@ public class CreditCardController {
 	CreditCard creditCard;
 	@Autowired
 	Employment  employment;
+	@Autowired
+    Transactions transactions;
 	
 
 	@RequestMapping("/home")
@@ -513,41 +520,81 @@ public class CreditCardController {
 	public String shop(@RequestParam("buy") int amount,
 			HttpSession session, Model model) {
 	
-	   model.addAttribute("amount", amount);
-	
+//	   model.addAttribute("amount", amount);
+		  session.setAttribute("amount", amount);
+
 				return "payment.jsp";
 	
 }
 
 @PostMapping("/payment")
 
-public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumber") int cardNumber,
-		@RequestParam("cvv") int cvv,@RequestParam("validity") String validity,
-		HttpSession session, Model model) {
-	
-	
-     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyMM");
-     
-     DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMM");
-     
-         // Parse the input date string to a YearMonth object
-         YearMonth yearMonth = YearMonth.parse(validity, inputFormatter);
-                          
-         // Format the YearMonth object to the desired output format
-         String outputDateString = yearMonth.format(outputFormatter);
-         
-         // Print the formatted date string
-         System.out.println("Formatted date: " + outputDateString);
-	
-	
-	
+public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumber") String cardNumber,
+		@RequestParam("cvv") int cvv,@RequestParam("validity") String validity,@RequestParam("description") String description,
+		HttpSession session,HttpServletRequest request, Model model) {
+	HttpSession sess = request.getSession();
 
-   model.addAttribute("amount", amount);
+	 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyMM");
+     YearMonth yearMonth = YearMonth.parse(validity, inputFormatter);
+     String formattedDate = yearMonth.toString();
+     System.out.println("Formatted date: " + formattedDate);
+	 
+     transactions.setCardNumber(cardNumber);
+     System.out.println("checkPayment"+cardRecordsDAO.checkPayment(transactions, cvv, formattedDate));
+	if(cardRecordsDAO.checkPayment(transactions, cvv, formattedDate)==true){
+		
+		
+
+		List<User> list=(List<User>) session.getAttribute("values");
+		
+		for(User values:list) {
+			
+			transactions.setId((values.getCustomerID()));
+			System.out.println("in payment Controller"+transactions.getId()); 
+			 
+		}
+		
+		       transactions.setCardNumber(cardNumber);
+	            transactions.setTranscationId(numberGenerationDAO.transactionID());
+
+		       LocalDateTime dateTime=LocalDateTime.now();
+				
+		       transactions.setDateTime(dateTime.toString());
+		       transactions.setAmount(amount);
+		       transactions.setDescription(description);
+		       
+		       transactionRecordsDAO.insert(transactions);
+		       model.addAttribute("CardDetails", "paymentSuccess");
+		       return"shop.jsp";
+	            
+	            
+	}else {
+		
+		model.addAttribute("CardDetails", "incorrectCardDetails");
+		
+		
+		
+	}
 
 			return "payment.jsp";
 
 }
 
+@PostMapping("/statement")
+
+public String statement() {
+	
+	
+	
+	
+	
+	
+	return null;
+	
+	
+	
+	
+}
 
 }
 

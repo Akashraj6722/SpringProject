@@ -104,6 +104,15 @@ public class NumberGenerationImpl implements NumberGenerationDAO {
 
 	}
 	
+	public String transactionID() {
+		
+		String transactioID="PMID"+random.nextInt(10000000);	
+		
+		return transactioID;
+		
+		
+	}
+	
 	
 	public NumberGenerationImpl() {
 		super();

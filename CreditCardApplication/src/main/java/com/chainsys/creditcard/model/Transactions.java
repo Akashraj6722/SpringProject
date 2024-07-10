@@ -11,6 +11,14 @@ public class Transactions {
 	String transcationId;
 	int amount;
 	String description;
+	
+	public Transactions() {
+		
+	}
+	
+	
+	public Transactions(String string, String string2, String string3, int int1, String string4) {
+	}
 	public int getId() {
 		return id;
 	}
@@ -50,5 +58,6 @@ public class Transactions {
 	
 	
 	
-
+	
+	
 }

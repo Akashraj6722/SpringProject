@@ -24,7 +24,9 @@ public class CreditCard {
 		
 	}
 	public CreditCard() {
-		// TODO Auto-generated constructor stub
+	}
+	public CreditCard(String string, int int1, String string2, String string3) {
+
 	}
 	public String getCardStatus() {
 		return cardStatus;

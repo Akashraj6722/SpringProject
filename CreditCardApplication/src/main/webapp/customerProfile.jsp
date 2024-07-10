@@ -59,7 +59,7 @@
 			PIN For Credit Card</a>  
 			
 	    <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
-	    <a href="shopping.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
+	    <a href="shop.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
 	    <form action="ShopServlet" method="get">
 			<button class="sideButton" type="submit" value="submit"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</button>
 

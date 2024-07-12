@@ -200,8 +200,11 @@ public class CreditCardController {
 			return "customerProfile.jsp";
 
 		}
+		}else {
+			
+			return"login.jsp";
 		}
-		return "mainPage.jsp";
+		
 
 	}
 	
@@ -361,6 +364,7 @@ public class CreditCardController {
 			if (annualIncome >= 200000 && annualIncome < 400000 && cibil>=650) {
 				//silver
 
+				System.out.println("Silver card in controller");
 				creditCard.setCardNumber(numberGenerationDAO.rupayCreditCardNumber());
 				creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
 
@@ -370,104 +374,83 @@ public class CreditCardController {
 
 				String valid = ym.plusYears(3).toString();
 				creditCard.setValidity(valid);
-				creditCard.setCardType("silver");
+				creditCard.setCardType("Silver");
 
 			
 					cardRecordsDAO.insert(creditCard, user, account);
 				model.addAttribute("preview", creditCard);
 					return "previewSilver.jsp";
 					
-			}
-//					request.setAttribute("values", cardRecordsDAO.display(creditCard));
-//					request.getRequestDispatcher("PreviewSilver.jsp").forward(request, response);
-//
-//
-//				} catch (ClassNotFoundException | SQLException e) {
-//					e.printStackTrace();
-//				}
-//
-//				
-//			} else if (income >= 400000 && income < 600000 && cibil>=700 ) {
-//				//gold card
-//				card.setCardNumber(NumberGeneration.pulseCreditCardNumber());
-//				card.setCvvNumber(NumberGeneration.ccvNumber());
-//
-//				YearMonth ym = YearMonth.now();
-//				String date = ym.toString();
-//				card.setCardAppliedDate(date);
-//
-//				String valid = ym.plusYears(3).toString();
-//				card.setValidity(valid);
-//				card.setCardType("gold");
-//
-//				try {
-//					CardRecords.insert(card, display, bankDetails);
-//					request.setAttribute("values", PreviewDetails.display(card));
-//					request.getRequestDispatcher("PreviewGold.jsp").forward(request, response);
-//
-//				} catch (ClassNotFoundException | SQLException e) {
-//					e.printStackTrace();
-//				}
-//
-//				
-//			} else if (income >= 600000 && income < 800000 && cibil>=800) {
-//				//platinum card
-//
-//				card.setCardNumber(NumberGeneration.visaCreditCardNumber());
-//				card.setCvvNumber(NumberGeneration.ccvNumber());
-//
-//				YearMonth ym = YearMonth.now();
-//				String date = ym.toString();
-//				card.setCardAppliedDate(date);
-//
-//				String valid = ym.plusYears(4).toString();
-//				card.setValidity(valid);
-//				card.setCardType("platinum");
-//
-//				try {
-//					CardRecords.insert(card, display, bankDetails);
-//					request.setAttribute("values", PreviewDetails.display(card));
-//					request.getRequestDispatcher("PreviewPlatinum.jsp").forward(request, response);
-//
-//
-//				} catch (ClassNotFoundException | SQLException e) {
-//					e.printStackTrace();
-//				}
-//
-//				
-//			} else if (income > 800000 && cibil>=850) {
+			} else if (annualIncome >= 400000 && annualIncome < 600000 && cibil>=700 ) {
+				//gold card
+				
+				System.out.println("Gold card in controller");
+
+			creditCard.setCardNumber(numberGenerationDAO.pulseCreditCardNumber());
+			creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+
+			YearMonth ym = YearMonth.now();
+			String date = ym.toString();
+			creditCard.setCardAppliedDate(date);
+
+			String valid = ym.plusYears(3).toString();
+			creditCard.setValidity(valid);
+			creditCard.setCardType("Gold");
+
+		
+				cardRecordsDAO.insert(creditCard, user, account);
+			model.addAttribute("preview", creditCard);
+				return "previewGold.jsp";
+			}				
+			 else if (annualIncome >= 600000 && annualIncome < 800000 && cibil>=800) {
+				//platinum card
+
+					System.out.println("Platinum card in controller");
+
+				 creditCard.setCardNumber(numberGenerationDAO.visaCreditCardNumber());
+					creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+
+					YearMonth ym = YearMonth.now();
+					String date = ym.toString();
+					creditCard.setCardAppliedDate(date);
+
+					String valid = ym.plusYears(4).toString();
+					creditCard.setValidity(valid);
+					creditCard.setCardType("Platinum");
+
+				
+						cardRecordsDAO.insert(creditCard, user, account);
+					model.addAttribute("preview", creditCard);
+						return "previewSilver.jsp";
+
+		} else if (annualIncome > 800000 && cibil>=850) {
 //				//elite
-//				card.setCardNumber(NumberGeneration.masterCreditCardNumber());
-//				card.setCvvNumber(NumberGeneration.ccvNumber());
-//
-//				YearMonth ym = YearMonth.now();
-//				String date = ym.toString();
-//				card.setCardAppliedDate(date);
-//
-//				String valid = ym.plusYears(5).toString();
-//				card.setValidity(valid);
-//				card.setCardType("elite");
-//
-//				try {
-//					CardRecords.insert(card, display, bankDetails);
-//					request.setAttribute("values", PreviewDetails.display(card));
-//					request.getRequestDispatcher("PreviewElite.jsp").forward(request, response);
-//
-//
-//				} catch (ClassNotFoundException | SQLException e) {
-//					e.printStackTrace();
-//				}
-//
-//				
-//			} else {
-//                //sorry U are not eligible
-//
-//			}
-//
-//		}
+			
+			System.out.println("Elite card in controller");
+
+			 creditCard.setCardNumber(numberGenerationDAO.masterCreditCardNumber());
+				creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+
+				YearMonth ym = YearMonth.now();
+				String date = ym.toString();
+				creditCard.setCardAppliedDate(date);
+
+				String valid = ym.plusYears(5).toString();
+				creditCard.setValidity(valid);
+				creditCard.setCardType("Elite");
+
+			
+					cardRecordsDAO.insert(creditCard, user, account);
+				model.addAttribute("preview", creditCard);
+					return "previewSilver.jsp";
+		} else {
+               //sorry U are not eligible
+			}
+
+		
 
 	
-		return designation;
+		return "cardForms.jsp";
 }
 	
 	@PostMapping("/setPin")

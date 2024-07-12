@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 	<%@ page import="java.util.ArrayList" %>
-    <%@ page import="com.chainsys.model.CreditCardDetails" %>
+<%@ page import="com.chainsys.creditcard.model.CreditCard"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +10,9 @@
 </head>
 <body>
 <%
-CreditCard preview = new CreditCard();
+CreditCard creditCard = (CreditCard) request.getAttribute("preview");
 
-ArrayList<CreditCard> list=(ArrayList<CreditCard>)request.getAttribute("values");
-for(CreditCard list1:list){
-	
-	String numberString=list1.getCardNumber();
-
+String numberString = creditCard.getCardNumber();
 	
 	 if (numberString.length() == 16) {
         String[] parts = numberString.split("(?<=\\G.{4})");
@@ -79,8 +75,8 @@ for(CreditCard list1:list){
 					<p>VALID TILL</p>
 				</div>
 				<div class="row name-gold">
-					<p>AKASH RAJ</p>
-					<p>10 / 25</p>
+					<p><%=creditCard.getHolderName()%></p>
+					<p><%=creditCard.getValidity()%></p>
 				</div>
 			</div>
 			<div class="back-gold">
@@ -90,12 +86,11 @@ for(CreditCard list1:list){
 					<div>
 						<img src="https://i.ibb.co/S6JG8px/pattern.png" width="200px" alt="pattern">
 					</div>
-					<p>824</p>
+					<p><%=creditCard.getCvvNumber()%></p>
 
 				</div>
 				<div class="row card-text-gold">
-					<p>this is a virtual card design using HTML and CSS. You can
-						aslo design something like this.</p>
+					<p>details.</p>
 				</div>
 				<div class="row signature-gold">
 					<p>CUSTOMER SIGNATURE</p>
@@ -113,7 +108,7 @@ for(CreditCard list1:list){
 
 
 <%}
-	 }%>
+	 %>
 
 
 </body>

@@ -163,8 +163,7 @@
                     </ul>
                 </div><br><br>
                 <div class="apply">
-                     <form action="CibilServlet" method="post">
-			<button type="submit" value="submit">Apply Now</button>
+                     <a href="cardForms.jsp">Apply Now</a>
                 </div>
 
             </div>
@@ -236,8 +235,8 @@
                     </ul>
                 </div><br><br>
                 <div class="apply">
- <form action="CibilServlet" method="post">
-			<button type="submit" value="submit">Apply Now</button>                </div>
+  <a href="cardForms.jsp">Apply Now</a>            
+  </div>
 
             </div>
         </div>
@@ -304,8 +303,7 @@
                     </ul>
                 </div>
                 <div class="apply">
- <form action="CibilServlet" method="post">
-			<button type="submit" value="submit">Apply Now</button>                </div>
+             <a href="cardForms.jsp">Apply Now</a>               </div>
             </div>
         </div>
 

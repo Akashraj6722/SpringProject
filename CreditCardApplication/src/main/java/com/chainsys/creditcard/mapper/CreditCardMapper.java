@@ -14,6 +14,7 @@ public class CreditCardMapper implements RowMapper<CreditCard>{
 		
 		CreditCard creditCard=new CreditCard();
 		
+		
 		creditCard.setId(rs.getInt("customer_id"));
 		creditCard.setAccountNumber(rs.getString("account_number"));
 		creditCard.setCardNumber(rs.getString("credit_card_number"));

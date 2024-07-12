@@ -557,9 +557,9 @@ public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumb
 		       transactions.setCardNumber(cardNumber);
 	            transactions.setTranscationId(numberGenerationDAO.transactionID());
 
-		       LocalDateTime dateTime=LocalDateTime.now();
-				
-		       transactions.setDateTime(dateTime.toString());
+		       LocalDateTime localDateTime=LocalDateTime.now();
+			   String dateTime=localDateTime.toString();
+		       transactions.setDateTime(dateTime);
 		       transactions.setAmount(amount);
 		       transactions.setDescription(description);
 		       
@@ -582,14 +582,24 @@ public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumb
 
 @PostMapping("/statement")
 
-public String statement() {
+public String statement(@RequestParam("id") int id,@RequestParam("cardNumber") String cardNumber
+		, Model model) {
+	
+	System.out.println("statement in controller"+ transactionRecordsDAO.checkCardNumber(cardNumber,id));
 	
 	
+	   if( transactionRecordsDAO.checkCardNumber(cardNumber,id)==true) {
+	
+	      transactions.setId(id);
+          transactions.setCardNumber(cardNumber);
+          
+          model.addAttribute("transactions", transactions);
+	   }
+	   
+	   
 	
 	
-	
-	
-	return null;
+	return "statement.jsp";
 	
 	
 	

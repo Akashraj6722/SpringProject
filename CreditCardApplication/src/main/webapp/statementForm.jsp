@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.chainsys.creditcard.model.User"%>
 <%@ page import="com.chainsys.creditcard.model.Transactions"%>
+
+    <%@ page import="java.util.List"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -9,37 +13,39 @@
 <title>Insert title here</title>
 <!-- Include SweetAlert CSS and JS files -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
- 
-  
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body> 
-<%
- Transactions trans=new Transactions();
- int amount=(int)session.getAttribute("amount");
- /* trans.setAmount(amount); */
+<% Transactions transactions=new Transactions();
+
+   List<User> list =(List<User>)session.getAttribute("values");
+   for(User user:list){
+	
+	transactions.setId(user.getCustomerID());
+}
+
  %>
 
-<form action="payment" method="post">
-       <h4>Amount:</h4><%=amount %>
+<form action="statement" method="post">
+
        <div class="form-group">
             <!-- <label for="amount">Total Amount</label> -->
-            <input type="hidden" id="amount" name="amount" value="<%=amount %>">
+            <input type="hidden" id="id" name="id" value="<%=transactions.getId() %>">
         </div>
         <div class="form-group">
             <label for="card-number">Card Number</label>
             <input type="text" id="card-number" name="cardNumber" pattern="[0-9]{16}" required>
         </div>
-        <div class="form-group">
+      <!--   <div class="form-group">
             <label for="expiry-date">Expiry Date</label>
             <input type="text" id="expiry-date" name="validity" placeholder="YY/MM"  pattern="[0-9]{4}" required>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" required>
-        </div>
+        </div> -->
         <input type="hidden" value="dress purchased" name="description">
-        <button type="submit">Pay</button>
+        <button type="submit">Check</button>
     </form>
 </div>
 

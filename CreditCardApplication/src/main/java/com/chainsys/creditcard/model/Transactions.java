@@ -1,5 +1,10 @@
 package com.chainsys.creditcard.model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,8 +22,33 @@ public class Transactions {
 	}
 	
 	
-	public Transactions(String string, String string2, String string3, int int1, String string4) {
+	
+	public Transactions(int int1, String string) {
+		
 	}
+
+
+
+
+
+
+	public Transactions(String string, String string2, int int1, String string3) {
+	}
+
+
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -31,12 +61,7 @@ public class Transactions {
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	public String getDateTime() {
-		return dateTime;
-	}
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
+	
 	public String getTranscationId() {
 		return transcationId;
 	}

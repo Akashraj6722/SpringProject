@@ -1,7 +1,7 @@
 # <a href="" target="_blank">Credit Card Application</a> 
 - A Java Web Developement Project
 - Admin
-- Customer
+- customer
 
 
 <hr>
@@ -51,7 +51,7 @@
 - My Sql Workbench
 
 
-### =================Absence Tracking System Features  =================
+### =================Credit Card Application Features  =================
 <span style="color:blue">**Apply Credit Card :**</span><br>
      To apply for a credit card, customers have to create an account, customer a decent Cibil score, and upload the salary slip along with the occupation details.<br>
 <span style="color:blue">**Credit Card Approval:**</span><br>

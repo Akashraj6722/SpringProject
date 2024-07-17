@@ -55,7 +55,7 @@
 <span style="color:blue">**Apply Credit Card :**</span><br>
      To apply for a credit card, customers have to create an account, customer a decent Cibil score, and upload the salary slip along with the occupation details.<br>
 <span style="color:blue">**Credit Card Approval:**</span><br>
-     Admins have to approve the customer's credit card. But before that, the admin has to check the occupation details that have been submitted by the customer.<br>
+     Admins have to approve the customer's credit card. But before that, the admin has to check the occupation details that have been submitted by the customer.After Approval/Rejection customer receives a Approval/Rejection mail<br>
 <span style="color:blue">**Set PIN:**</span><br>
     After Approval customer can set their Credit card PIN<br>
 <span style="color:blue">**Shopping:**</span><br>

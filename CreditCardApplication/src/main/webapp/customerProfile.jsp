@@ -60,6 +60,7 @@
 			
 	    <a href="cibil.jsp"><i class="fa-solid fa-gauge-high"></i>Check CIBIL Score</a>
 	    <a href="shop.jsp"><i class="fa-brands fa-shopify"></i>Shop With Card</a>
+	    <a href="creditPointsCheck.jsp"><i class="fa-solid fa-star-half-stroke"></i>Credit Points</a>
 	    <a href="statementForm.jsp"><i class="fa-solid fa-tent-arrow-left-right"></i>Statement</a>
 	    
 	    <!-- <form action="ShopServlet" method="get">

@@ -8,6 +8,13 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 </head>
 <body>
+<div class="header">
+
+		
+			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+		
+
+	</div>
 
 
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -84,6 +91,23 @@
 
 <style>
 
+img{
+   margin-top: 4px;
+}
+.header {
+	background-color: rgb(20, 136, 236);
+	color: #fff;
+	height: 75px;
+	margin-top:-42.4%;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+
+ 
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -141,7 +165,7 @@ body {
 
     button:hover {
         background-color: rgb(15, 94, 164);
-    }
+    } */
 
 
 

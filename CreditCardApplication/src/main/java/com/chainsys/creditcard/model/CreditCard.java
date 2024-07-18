@@ -12,6 +12,7 @@ public class CreditCard {
 	String cardType;
 	int cvvNumber;
 	int pin;
+	int creditPoints;
 	String cardAppliedDate;
 	String validity;
 	String cardApproval;
@@ -27,6 +28,14 @@ public class CreditCard {
 	}
 	public CreditCard(String string, int int1, String string2, String string3) {
 
+	}
+	public CreditCard(String string, int int1, String string2) {
+	}
+	public CreditCard(int int1) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public CreditCard(int int1, String string) {
 	}
 	public String getCardStatus() {
 		return cardStatus;
@@ -95,6 +104,12 @@ public class CreditCard {
 	}
 	public void setPin(int pin) {
 		this.pin = pin;
+	}
+	public int getCreditPoints() {
+		return creditPoints;
+	}
+	public void setCreditPoints(int creditPoints) {
+		this.creditPoints = creditPoints;
 	}
 
 	

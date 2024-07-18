@@ -9,14 +9,14 @@
 <title>Insert title here</title>
 </head>
 <body> 
-<%
+<div class="header">
 
+		
+			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+		
 
-/* 
-if (session == null || session.getAttribute("userDetails") == null) {
-		 response.sendRedirect("mainPage.jsp"); 
-	} */
-%>
+	</div>
+	
 <%
 
  HttpSession sess = request.getSession();
@@ -46,6 +46,20 @@ if (session == null || session.getAttribute("userDetails") == null) {
 
 
 <style>
+
+img{
+   margin-top: 4px;
+}
+.header {
+	background-color: rgb(20, 136, 236);
+	color: #fff;
+	height: 75px;
+	margin-top:-42.4%;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -62,6 +76,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height:350px;
+    margin-top:40px;
 }
 
 form {
@@ -94,4 +109,6 @@ button {
 button:hover {
     background-color: #rgb(13, 176, 13);
 }
+
+</style>
 </html>

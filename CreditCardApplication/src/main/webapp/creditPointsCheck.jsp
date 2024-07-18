@@ -1,21 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="com.chainsys.creditcard.model.User"%>
-<%@ page import="com.chainsys.creditcard.model.Transactions"%>
-
-    <%@ page import="java.util.List"%>
-
+    
+    <%@ page import="com.chainsys.creditcard.model.User"%>
+        <%@ page import="java.util.List"%>
+    
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<!-- Include SweetAlert CSS and JS files -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ 
+  
 </head>
 <body> 
+<% 
+
+   List<User> list =(List<User>)session.getAttribute("values");
+   for(User user:list){
+	
+	
+
+
+ %>
 <div class="header">
 
 		
@@ -23,68 +32,57 @@
 		
 
 	</div>
-	
-<% Transactions transactions=new Transactions();
 
-   List<User> list =(List<User>)session.getAttribute("values");
-   for(User user:list){
-	
-	transactions.setId(user.getCustomerID());
-}
-
- %>
-
-<form action="statement" method="post">
-
+<form action="creditPoints" method="post">
+       
        <div class="form-group">
-            <!-- <label for="amount">Total Amount</label> -->
-            <input type="hidden" id="id" name="id" value="<%=transactions.getId() %>">
+            <input type="hidden" id="id" name="id" value="<%=user.getCustomerID() %>">
         </div>
+       
+  <%} %>     
         <div class="form-group">
             <label for="card-number">Card Number</label>
             <input type="text" id="card-number" name="cardNumber" pattern="[0-9]{16}" required>
         </div>
-      <!--   <div class="form-group">
+        <!-- <div class="form-group">
             <label for="expiry-date">Expiry Date</label>
             <input type="text" id="expiry-date" name="validity" placeholder="YY/MM"  pattern="[0-9]{4}" required>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" required>
-        </div> -->
-        <input type="hidden" value="dress purchased" name="description">
+        </div>
+        <input type="hidden" value="dress purchased" name="description"> -->
         <button type="submit">Check</button>
     </form>
-</div>
 
-<script>
+
+
 <%
-String alert=(String) request.getAttribute("CardDetails");
-System.out.println("alert--->" + alert);
-String message = "";
-String messageType = "";
+Integer creditpoints = (Integer) request.getAttribute("creditPoints");
+if (creditpoints == null) {
+    creditpoints = 0; 
+}
+else{
+System.out.println("alert---> in creditPointsCheck.jsp: " + creditpoints);
+int message = creditpoints;
+String messageType = (creditpoints != 0) ? "success" : "info";
 
-if(alert != null && !alert.isEmpty()){
-    if(alert.equals("paymentSuccess")){
-        message = "Order Placed";
-        messageType = "success";
-    } else {
-        message = "Incorrect Card Details";
-        messageType = "error";
-    }
 %>
 
+<script>
 Swal.fire({
     title: 'Notification',
-    text: '<%= message %>',
+    text: '<%= creditpoints  %>',
     icon: '<%= messageType %>'
 });
-
-<%}%>
 </script>
+
+<%
+}
+%>
 </body>
 <style>
-
 img{
    margin-top: 4px;
 }
@@ -98,6 +96,7 @@ img{
 	width: 100%;
 	z-index: 1000;
 }
+
     body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;

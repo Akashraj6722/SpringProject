@@ -15,6 +15,8 @@ public interface CardRecordsDAO {
 	public void insert(CreditCard creditCard, User user, Account account);
 
 	public void update(CreditCard creditCard, User user);
+	
+	public  void updateCreditPoints(CreditCard creditCard,Transactions transactions) ;
 
 	public List<CreditCard> read();
 
@@ -22,6 +24,11 @@ public interface CardRecordsDAO {
 	 public boolean checkCardPin(String cardNumber);
 
 	 public  boolean checkPayment(Transactions transactions,int cvv,String validity) ;
+	 
+	 public  boolean checkPoints(int id,String cardNumber) ;
+	 
+	 public  Object readCreditPoints(int id,String cardNumber) ;
+
 	
 	public  List<CreditCard> display(CreditCard CreditCard);
 

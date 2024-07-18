@@ -61,10 +61,9 @@ public class CreditCardController {
 	@Autowired
 	CreditCard creditCard;
 	@Autowired
-	Employment  employment;
+	Employment employment;
 	@Autowired
-    Transactions transactions;
-	
+	Transactions transactions;
 
 	@RequestMapping("/home")
 	public String mainPage() {
@@ -73,74 +72,62 @@ public class CreditCardController {
 
 	}
 
-	
-@PostMapping("/cardapproval")
-	
-	public String cardApproval(@RequestParam("action")String action ,@RequestParam("id")int id,@RequestParam("card")String cardNumber) throws MessagingException {
-	
-	switch(action) {
-	
-	case("accept"):
-		
+	@PostMapping("/cardapproval")
+
+	public String cardApproval(@RequestParam("action") String action, @RequestParam("id") int id,
+			@RequestParam("card") String cardNumber) throws MessagingException {
+
+		switch (action) {
+
+		case ("accept"):
+
 //		int id = Integer.parseInt(request.getParameter("id"));
 //	String cardNumber=request.getParameter("card");
-		
-	creditCard.setId(id);
-	approvalRecordsDAO.approve(creditCard);
-	
-	
-    String mail=userRecordsDAO.readMail(id);
-	String message="Your Credit Card:"+cardNumber+"has been Approved";
-	
-	MailImpl.setProperties();
-	MailImpl.setMailBody(mail, message);
-	
-	System.out.println(" Accepted mail");
-	
-	return"creditCardApproval.jsp";
-	
-	
-	
-	
 
-		
-	case("reject"):
-		
-		creditCard.setId(id);
-	approvalRecordsDAO.reject(creditCard);
-	
-    	 
-    String retrivedmail=userRecordsDAO.readMail(id);
- 	String mailMessage="Your Credit Card:"+cardNumber+"has been Rejected";
- 	
- 	MailImpl.setProperties();
-	MailImpl.setMailBody(retrivedmail, mailMessage);
-	
-	System.out.println("Rejected Mail");
- 	
- 	
-		
-	return"creditCardApproval.jsp";
-     
-     
-     
-     default:
-			
+			creditCard.setId(id);
+			approvalRecordsDAO.approve(creditCard);
+
+			String mail = userRecordsDAO.readMail(id);
+			String message = "Your Credit Card:" + cardNumber + "has been Approved";
+
+			MailImpl.setProperties();
+			MailImpl.setMailBody(mail, message);
+
+			System.out.println(" Accepted mail");
+
+			return "creditCardApproval.jsp";
+
+		case ("reject"):
+
+			creditCard.setId(id);
+			approvalRecordsDAO.reject(creditCard);
+
+			String retrivedmail = userRecordsDAO.readMail(id);
+			String mailMessage = "Your Credit Card:" + cardNumber + "has been Rejected";
+
+			MailImpl.setProperties();
+			MailImpl.setMailBody(retrivedmail, mailMessage);
+
+			System.out.println("Rejected Mail");
+
+			return "creditCardApproval.jsp";
+
+		default:
+
 			break;
-	
-	
-	}
 
+		}
 
+		return "  ";
 
-		return"  ";
-		
 	}
 
 	@PostMapping("/signup")
 	public String signup(@RequestParam("fName") String fName, @RequestParam("lName") String lName,
-			@RequestParam("DOB") String DOB, @RequestParam("aadhaar") String aadhaar,@RequestParam("aadhaarProof") MultipartFile aadhaarProof, @RequestParam("pan") String pan,
-			@RequestParam("panProof") MultipartFile panProof,@RequestParam("mail") String mail, @RequestParam("ph") String ph, @RequestParam("pass") String pass) throws IOException {
+			@RequestParam("DOB") String DOB, @RequestParam("aadhaar") String aadhaar,
+			@RequestParam("aadhaarProof") MultipartFile aadhaarProof, @RequestParam("pan") String pan,
+			@RequestParam("panProof") MultipartFile panProof, @RequestParam("mail") String mail,
+			@RequestParam("ph") String ph, @RequestParam("pass") String pass) throws IOException {
 
 		NumberGenerationImpl numberGeneration = new NumberGenerationImpl();
 
@@ -152,13 +139,13 @@ public class CreditCardController {
 		user.setMail(mail);
 		user.setPhone(ph);
 		user.setPassword(pass);
-		byte[] image=null;
-		image=aadhaarProof.getBytes();
+		byte[] image = null;
+		image = aadhaarProof.getBytes();
 		user.setAadhaarProof(image);
-		
-		image=panProof.getBytes();
+
+		image = panProof.getBytes();
 		user.setPanProof(image);
-								
+
 		userRecordsDAO.insert(user);
 
 		user.setCustomerID(userRecordsDAO.readId(user));
@@ -180,50 +167,44 @@ public class CreditCardController {
 
 		user.setMail(mail);
 		user.setPassword(pass);
-		
-		
+
 		if (userRecordsDAO.check(user) == true) {
-		
-			if(mail.endsWith("@admin.com")) {
-				
-				return"adminPage.jsp";
-			
-			}else {
 
-			List<User> list = userRecordsDAO.readProfile(user.getMail());
-			for (User values : list) {
+			if (mail.endsWith("@admin.com")) {
 
-			}
-			session.setAttribute("values", list);
+				return "adminPage.jsp";
+
+			} else {
+
+				List<User> list = userRecordsDAO.readProfile(user.getMail());
+				for (User values : list) {
+
+				}
+				session.setAttribute("values", list);
 //		model.addAttribute("userDetails", user);
 
-			return "customerProfile.jsp";
+				return "customerProfile.jsp";
 
+			}
+		} else {
+
+			return "login.jsp";
 		}
-		}else {
-			
-			return"login.jsp";
-		}
-		
 
 	}
-	
-	
+
 	@PostMapping("/logout")
-	
-	
-	public String logout(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		 session=request.getSession(false);
-		
-		if(session!=null) {
+
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		session = request.getSession(false);
+
+		if (session != null) {
 			session.invalidate();
 		}
-		
-		
+
 		return "mainPage.jsp";
-		
+
 	}
 
 	@PostMapping("/accountDetails")
@@ -242,9 +223,9 @@ public class CreditCardController {
 
 	@PostMapping("/cibil")
 
-	public String cibil(HttpSession session, Model model,HttpServletRequest request, HttpServletResponse response) {
-        
-		 HttpSession sess = request.getSession();
+	public String cibil(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession sess = request.getSession();
 
 		List<User> values = (List<User>) session.getAttribute("values");
 		for (User display : values) {
@@ -252,9 +233,9 @@ public class CreditCardController {
 			user.setCustomerID(display.getCustomerID());
 
 		}
-		Random random =new Random();
+		Random random = new Random();
 
-		System.out.println("boolen"+accountRecordsDAO.checkCibil(user, account));
+		System.out.println("boolen" + accountRecordsDAO.checkCibil(user, account));
 		if (accountRecordsDAO.checkCibil(user, account) == false) {
 			int cibilScore = random.nextInt(600, 900);
 			account.setCibil(cibilScore);
@@ -268,54 +249,51 @@ public class CreditCardController {
 		else {
 			System.out.println("old");
 
-	       account.setCibil(accountRecordsDAO.readCibil(user, account)) ;
+			account.setCibil(accountRecordsDAO.readCibil(user, account));
 			model.addAttribute("cibil", account.getCibil());
 
 			return "cibilScore.jsp";
 
 		}
 	}
-	
-	
+
 	@PostMapping("/cardApplication")
-	
-	public String cardApplication(HttpSession session,HttpServletRequest request, HttpServletResponse response ) {
-		
-		HttpSession sess=request.getSession();
+
+	public String cardApplication(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession sess = request.getSession();
 		List<User> values1 = (List<User>) sess.getAttribute("values");
 		for (User display : values1) {
-			
-			user.setCustomerID( display.getCustomerID());
+
+			user.setCustomerID(display.getCustomerID());
 
 		}
 
-			System.out.println(accountRecordsDAO.checkCibil(user, account));
-			if(accountRecordsDAO.checkCibil(user, account)==true) {
-				
-				return "cardForms.jsp";
+		System.out.println(accountRecordsDAO.checkCibil(user, account));
+		if (accountRecordsDAO.checkCibil(user, account) == true) {
 
-			}
-			else {
-                
-				System.out.println("check cibil score first");
-		
-		
-		return "customerDetails.jsp";
-		
-		
-			}
+			return "cardForms.jsp";
+
+		} else {
+
+			System.out.println("check cibil score first");
+
+			return "customerDetails.jsp";
+
+		}
 	}
-	
+
 	@PostMapping("/occupation")
-	
-	public String  occupation(@RequestParam("occupation") String occupation,@RequestParam("companyName") String companyName,
-			@RequestParam("designation") String designation,@RequestParam("annualIncome") Long annualIncome,@RequestParam("incomeProof") MultipartFile incomeProof,
-			HttpSession session,HttpServletRequest request, Model model) throws IOException {
-		
+
+	public String occupation(@RequestParam("occupation") String occupation,
+			@RequestParam("companyName") String companyName, @RequestParam("designation") String designation,
+			@RequestParam("annualIncome") Long annualIncome, @RequestParam("incomeProof") MultipartFile incomeProof,
+			HttpSession session, HttpServletRequest request, Model model) throws IOException {
+
 		HttpSession sess = request.getSession();
 		String fName = null;
 		String lName = null;
-		String accountNumber=null;
+		String accountNumber = null;
 		List<User> values1 = (List<User>) sess.getAttribute("values");
 		for (User display : values1) {
 
@@ -325,66 +303,62 @@ public class CreditCardController {
 			user.setMail(display.getMail());
 //			user.setPassword(display.getPassword());
 
-			
 		}
-		
-		System.out.println("Name in occupation"+user.getMail());
+
+		System.out.println("Name in occupation" + user.getMail());
 //		System.out.println("Pass in occupation"+user.getPassword());
 
-			creditCard.setHolderName(fName + " " + lName);
+		creditCard.setHolderName(fName + " " + lName);
 
-			employment.setOccupation(occupation);
+		employment.setOccupation(occupation);
 
-			employment.setCompanyname(companyName);
-			employment.setDesignation(designation);
-			employment.setIncome(annualIncome);
-			
-			byte[] image=null;
-			image=incomeProof.getBytes();
-			employment.setIncomeProof(image);
-			
-			
+		employment.setCompanyname(companyName);
+		employment.setDesignation(designation);
+		employment.setIncome(annualIncome);
 
-			   int id= userRecordsDAO.readId(user);         // to get customer id
-				
-				List<Account> list=accountRecordsDAO.read(account,id); // to get account number
-				for(Account values:list) {
-					
-					accountNumber=values.getAccountNumber();
-				}
-				
-				account.setAccountNumber(accountNumber);
-				System.out.println("accountNumber in occupation"+accountNumber);
-				System.out.println("accountNumber in occupation"+account.getAccountNumber());
-				employmentRecordsDAO.insert(employment, user);
-				int cibil=accountRecordsDAO.readCibil(user, account);//to get cibil score
+		byte[] image = null;
+		image = incomeProof.getBytes();
+		employment.setIncomeProof(image);
+
+		int id = userRecordsDAO.readId(user); // to get customer id
+
+		List<Account> list = accountRecordsDAO.read(account, id); // to get account number
+		for (Account values : list) {
+
+			accountNumber = values.getAccountNumber();
+		}
+
+		account.setAccountNumber(accountNumber);
+		System.out.println("accountNumber in occupation" + accountNumber);
+		System.out.println("accountNumber in occupation" + account.getAccountNumber());
+		employmentRecordsDAO.insert(employment, user);
+		int cibil = accountRecordsDAO.readCibil(user, account);// to get cibil score
 
 //			int cibil=bankDetails.getCibil();
 
-			if (annualIncome >= 200000 && annualIncome < 400000 && cibil>=650) {
-				//silver
+		if (annualIncome >= 200000 && annualIncome < 400000 && cibil >= 650) {
+			// silver
 
-				System.out.println("Silver card in controller");
-				creditCard.setCardNumber(numberGenerationDAO.rupayCreditCardNumber());
-				creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+			System.out.println("Silver card in controller");
+			creditCard.setCardNumber(numberGenerationDAO.rupayCreditCardNumber());
+			creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
 
-				YearMonth ym = YearMonth.now();
-				String date = ym.toString();
-				creditCard.setCardAppliedDate(date);
+			YearMonth ym = YearMonth.now();
+			String date = ym.toString();
+			creditCard.setCardAppliedDate(date);
 
-				String valid = ym.plusYears(3).toString();
-				creditCard.setValidity(valid);
-				creditCard.setCardType("Silver");
+			String valid = ym.plusYears(3).toString();
+			creditCard.setValidity(valid);
+			creditCard.setCardType("Silver");
 
-			
-					cardRecordsDAO.insert(creditCard, user, account);
-				model.addAttribute("preview", creditCard);
-					return "previewSilver.jsp";
-					
-			} else if (annualIncome >= 400000 && annualIncome < 600000 && cibil>=700 ) {
-				//gold card
-				
-				System.out.println("Gold card in controller");
+			cardRecordsDAO.insert(creditCard, user, account);
+			model.addAttribute("preview", creditCard);
+			return "previewSilver.jsp";
+
+		} else if (annualIncome >= 400000 && annualIncome < 600000 && cibil >= 700) {
+			// gold card
+
+			System.out.println("Gold card in controller");
 
 			creditCard.setCardNumber(numberGenerationDAO.pulseCreditCardNumber());
 			creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
@@ -397,197 +371,211 @@ public class CreditCardController {
 			creditCard.setValidity(valid);
 			creditCard.setCardType("Gold");
 
-		
-				cardRecordsDAO.insert(creditCard, user, account);
+			cardRecordsDAO.insert(creditCard, user, account);
 			model.addAttribute("preview", creditCard);
-				return "previewGold.jsp";
-			}				
-			 else if (annualIncome >= 600000 && annualIncome < 800000 && cibil>=800) {
-				//platinum card
+			return "previewGold.jsp";
+		} else if (annualIncome >= 600000 && annualIncome < 800000 && cibil >= 800) {
+			// platinum card
 
-					System.out.println("Platinum card in controller");
+			System.out.println("Platinum card in controller");
 
-				 creditCard.setCardNumber(numberGenerationDAO.visaCreditCardNumber());
-					creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+			creditCard.setCardNumber(numberGenerationDAO.visaCreditCardNumber());
+			creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
 
-					YearMonth ym = YearMonth.now();
-					String date = ym.toString();
-					creditCard.setCardAppliedDate(date);
+			YearMonth ym = YearMonth.now();
+			String date = ym.toString();
+			creditCard.setCardAppliedDate(date);
 
-					String valid = ym.plusYears(4).toString();
-					creditCard.setValidity(valid);
-					creditCard.setCardType("Platinum");
+			String valid = ym.plusYears(4).toString();
+			creditCard.setValidity(valid);
+			creditCard.setCardType("Platinum");
 
-				
-						cardRecordsDAO.insert(creditCard, user, account);
-					model.addAttribute("preview", creditCard);
-						return "previewSilver.jsp";
+			cardRecordsDAO.insert(creditCard, user, account);
+			model.addAttribute("preview", creditCard);
+			return "previewSilver.jsp";
 
-		} else if (annualIncome > 800000 && cibil>=850) {
+		} else if (annualIncome > 800000 && cibil >= 850) {
 //				//elite
-			
+
 			System.out.println("Elite card in controller");
 
-			 creditCard.setCardNumber(numberGenerationDAO.masterCreditCardNumber());
-				creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
+			creditCard.setCardNumber(numberGenerationDAO.masterCreditCardNumber());
+			creditCard.setCvvNumber(numberGenerationDAO.ccvNumber());
 
-				YearMonth ym = YearMonth.now();
-				String date = ym.toString();
-				creditCard.setCardAppliedDate(date);
+			YearMonth ym = YearMonth.now();
+			String date = ym.toString();
+			creditCard.setCardAppliedDate(date);
 
-				String valid = ym.plusYears(5).toString();
-				creditCard.setValidity(valid);
-				creditCard.setCardType("Elite");
+			String valid = ym.plusYears(5).toString();
+			creditCard.setValidity(valid);
+			creditCard.setCardType("Elite");
 
-			
-					cardRecordsDAO.insert(creditCard, user, account);
-				model.addAttribute("preview", creditCard);
-					return "previewSilver.jsp";
+			cardRecordsDAO.insert(creditCard, user, account);
+			model.addAttribute("preview", creditCard);
+			return "previewSilver.jsp";
 		} else {
-               //sorry U are not eligible
-			}
+			// sorry U are not eligible
+		}
 
-		
-
-	
 		return "cardForms.jsp";
-}
-	
+	}
+
 	@PostMapping("/setPin")
-	
-	public String setPin(@RequestParam("cardNumber")String cardNumber,@RequestParam("pin")int pin,
+
+	public String setPin(@RequestParam("cardNumber") String cardNumber, @RequestParam("pin") int pin,
 			HttpSession session, Model model) {
-		
-		
-		List<User> list=(List<User>) session.getAttribute("values");
-		
-		for(User values:list) {
-			
+
+		List<User> list = (List<User>) session.getAttribute("values");
+
+		for (User values : list) {
+
 			user.setCustomerID(values.getCustomerID());
-			System.out.println("in setPin Controller"+user.getCustomerID()); 
-			 
-			 
+			System.out.println("in setPin Controller" + user.getCustomerID());
+
 		}
 		creditCard.setCardNumber(cardNumber);
 		creditCard.setPin(pin);
 		System.out.println(cardRecordsDAO.checkCardApproval(cardNumber));
-		if(cardRecordsDAO.checkCardApproval(cardNumber)==true) {
-			
+		if (cardRecordsDAO.checkCardApproval(cardNumber) == true) {
+
 			System.out.println(cardRecordsDAO.checkCardPin(cardNumber));
-			if(cardRecordsDAO.checkCardPin(cardNumber)==false) {
-			
-			
-			model.addAttribute("checkApproval", "Success");
-			
-			cardRecordsDAO.update(creditCard, user);
-			
-			
-			return "customerProfile.jsp";
-			
-			
-			
-		}}else {
+			if (cardRecordsDAO.checkCardPin(cardNumber) == false) {
+
+				cardRecordsDAO.update(creditCard, user);
+
+				model.addAttribute("checkApproval", "Success");
+
+
+				return "customerProfile.jsp";
+
+			}
+		} else {
 			model.addAttribute("checkApproval", "Failed");
 
-			
-			
 		}
-	
-		
+
 		return "setPin.jsp";
-		
+
+	}
+
+	@PostMapping("/shop")
+
+	public String shop(@RequestParam("buy") int amount, HttpSession session, Model model) {
+
+//	   model.addAttribute("amount", amount);
+		session.setAttribute("amount", amount);
+
+		return "payment.jsp";
+
+	}
+
+	@PostMapping("/payment")
+
+	public String payment(@RequestParam("amount") int amount, @RequestParam("cardNumber") String cardNumber,
+			@RequestParam("cvv") int cvv, @RequestParam("validity") String validity,
+			@RequestParam("description") String description, HttpSession session, HttpServletRequest request,
+			Model model) {
+		HttpSession sess = request.getSession();
+
+		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyMM");
+		YearMonth yearMonth = YearMonth.parse(validity, inputFormatter);
+		String formattedDate = yearMonth.toString();
+		System.out.println("Formatted date: " + formattedDate);
+
+		transactions.setCardNumber(cardNumber);
+		System.out.println("checkPayment" + cardRecordsDAO.checkPayment(transactions, cvv, formattedDate));
+		if (cardRecordsDAO.checkPayment(transactions, cvv, formattedDate) == true) {
+
+			List<User> list = (List<User>) session.getAttribute("values");
+
+			for (User values : list) {
+
+				transactions.setId((values.getCustomerID()));
+				System.out.println("in payment Controller" + transactions.getId());
+
+			}
+			if (amount < 1000) {
+
+				creditCard.setCreditPoints(0);
+			}
+
+			else if (amount > 1000 && amount <= 1500) {
+				creditCard.setCreditPoints(100);
+			} else if (amount > 1500 && amount <= 2500) {
+				creditCard.setCreditPoints(200);
+			} else {
+                  
+				creditCard.setCreditPoints(500);
+			}
+          
+			
+			transactions.setCardNumber(cardNumber);
+			cardRecordsDAO.updateCreditPoints(creditCard, transactions);
+
+			transactions.setTranscationId(numberGenerationDAO.transactionID());
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+			String dateTime = localDateTime.toString();
+			transactions.setDateTime(dateTime);
+			transactions.setAmount(amount);
+			transactions.setDescription(description);
+
+			transactionRecordsDAO.insert(transactions);
+			model.addAttribute("CardDetails", "paymentSuccess");
+			return "shop.jsp";
+
+		} else {
+
+			model.addAttribute("CardDetails", "incorrectCardDetails");
+
+		}
+
+		return "payment.jsp";
+
+	}
+
+	@PostMapping("/statement")
+
+	public String statement(@RequestParam("id") int id, @RequestParam("cardNumber") String cardNumber, Model model) {
+
+		System.out.println("statement in controller" + transactionRecordsDAO.checkCardNumber(cardNumber, id));
+
+		if (transactionRecordsDAO.checkCardNumber(cardNumber, id) == true) {
+
+			transactions.setId(id);
+			transactions.setCardNumber(cardNumber);
+
+			model.addAttribute("transactions", transactions);
+		}
+
+		return "statement.jsp";
+
 	}
 	
-@PostMapping("/shop")
+	@PostMapping("/creditPoints")       
 	
-	public String shop(@RequestParam("buy") int amount,
-			HttpSession session, Model model) {
-	
-//	   model.addAttribute("amount", amount);
-		  session.setAttribute("amount", amount);
-
-				return "payment.jsp";
-	
-}
-
-@PostMapping("/payment")
-
-public String payment(@RequestParam("amount") int amount,@RequestParam("cardNumber") String cardNumber,
-		@RequestParam("cvv") int cvv,@RequestParam("validity") String validity,@RequestParam("description") String description,
-		HttpSession session,HttpServletRequest request, Model model) {
-	HttpSession sess = request.getSession();
-
-	 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyMM");
-     YearMonth yearMonth = YearMonth.parse(validity, inputFormatter);
-     String formattedDate = yearMonth.toString();
-     System.out.println("Formatted date: " + formattedDate);
-	 
-     transactions.setCardNumber(cardNumber);
-     System.out.println("checkPayment"+cardRecordsDAO.checkPayment(transactions, cvv, formattedDate));
-	if(cardRecordsDAO.checkPayment(transactions, cvv, formattedDate)==true){
+	public String creditPoints(@RequestParam("id") int id, @RequestParam("cardNumber") String cardNumber, Model model) {
 		
+		System.out.println("Im in creditPoints controller");
 		
-
-		List<User> list=(List<User>) session.getAttribute("values");
+		System.out.println("in creditPoints controller"+cardRecordsDAO.checkPoints(id, cardNumber));
 		
-		for(User values:list) {
+		if (cardRecordsDAO.checkPoints(id, cardNumber)==true) {
 			
-			transactions.setId((values.getCustomerID()));
-			System.out.println("in payment Controller"+transactions.getId()); 
-			 
+			model.addAttribute("creditPoints", cardRecordsDAO.readCreditPoints(id, cardNumber));
+			
+			
+			
+			
 		}
 		
-		       transactions.setCardNumber(cardNumber);
-	            transactions.setTranscationId(numberGenerationDAO.transactionID());
-
-		       LocalDateTime localDateTime=LocalDateTime.now();
-			   String dateTime=localDateTime.toString();
-		       transactions.setDateTime(dateTime);
-		       transactions.setAmount(amount);
-		       transactions.setDescription(description);
-		       
-		       transactionRecordsDAO.insert(transactions);
-		       model.addAttribute("CardDetails", "paymentSuccess");
-		       return"shop.jsp";
-	            
-	            
-	}else {
 		
-		model.addAttribute("CardDetails", "incorrectCardDetails");
+		return "creditPointsCheck.jsp";
+		
+		
 		
 		
 		
 	}
 
-			return "payment.jsp";
-
 }
-
-@PostMapping("/statement")
-
-public String statement(@RequestParam("id") int id,@RequestParam("cardNumber") String cardNumber
-		, Model model) {
-	
-	System.out.println("statement in controller"+ transactionRecordsDAO.checkCardNumber(cardNumber,id));
-	
-	
-	   if( transactionRecordsDAO.checkCardNumber(cardNumber,id)==true) {
-	
-	      transactions.setId(id);
-          transactions.setCardNumber(cardNumber);
-          
-          model.addAttribute("transactions", transactions);
-	   }
-	   
-	   
-	
-	
-	return "statement.jsp";
-	
-	
-	
-	
-}
-
-}
-

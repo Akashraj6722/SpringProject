@@ -7,13 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
- <div>
+ <div class="header">
 
-    </div>
+		
+			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+		
+
+	</div>
     <div class="card-container">
         <div class="card">
             <h3></h3>
             <img src="images/samantha.webp" width="250px">
+            <h3>Striped Cotton Saree</h3>
             <h4>RS.1499 only</h4>
             <form action="shop" method="post">
             <input type="hidden" value="1499" name="buy">
@@ -23,7 +28,8 @@
         <div class="card">
             <h3></h3>
             <img src="images/virat-kohli.webp" width="250px">
-            <h4>RS.5999 only</h4>
+            <h3>Combo(T-Shirt,Pant,Shoe)</h3>
+            <h4>  RS.5999 only</h4>
             <form action="shop" method="post">
             <input type="hidden" value="5999" name="buy">
             <input type="submit" value="Buy Now">
@@ -36,6 +42,20 @@
 
 </body>
 <style>
+
+img{
+   margin-top: 4px;
+}
+.header {
+	background-color: rgb(20, 136, 236);
+	color: #fff;
+	height: 75px;
+	margin-top:-42.4%;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
     body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -51,6 +71,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     max-width: 1200px;
+    margin-top:30px;
 }
 
 .card {

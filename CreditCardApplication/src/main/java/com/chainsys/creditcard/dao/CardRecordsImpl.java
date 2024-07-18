@@ -43,6 +43,17 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 		
 		
   }
+  public  void updateCreditPoints(CreditCard creditCard,Transactions transactions)  {
+		
+		String query="UPDATE credit_card_details SET credit_points=? WHERE customer_id=? AND credit_card_number=?";
+		
+		System.out.println("to update points"+creditCard.getCreditPoints()+transactions.getId()+transactions.getCardNumber());
+		jdbcTemplate.update(query,+creditCard.getCreditPoints(),transactions.getId(),transactions.getCardNumber());
+		
+		
+		
+		
+}
   
   public  List<CreditCard> read()  {
 		
@@ -66,10 +77,10 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 	}
   
   public boolean checkCardPin(String cardNumber) {
-	    String query = "SELECT credit_card_number,credit_card_pin FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved'";
+	    String query = "SELECT credit_card_pin FROM credit_card_details WHERE credit_card_number=? AND credit_card_approval='Approved'";
 
 	    List<CreditCard> results = jdbcTemplate.query(query, 
-	            (rs, rowNum) -> new CreditCard(rs.getString("credit_card_number"), rs.getInt("credit_card_pin")), 
+	            (rs, rowNum) -> new CreditCard( rs.getInt("credit_card_pin")), 
 	            cardNumber);
 
 	    return !results.isEmpty();
@@ -84,6 +95,27 @@ public  void insert(CreditCard creditCard, User user ,Account account)  {
 	            transactions.getCardNumber(),cvv,validity);
 		 return !results.isEmpty();	
   }
+ 
+ public  boolean checkPoints(int id,String cardNumber)  {
+	  
+		String query = "SELECT customer_id, credit_card_number FROM credit_card_details WHERE customer_id AND credit_card_number=?   ";
+		
+		System.out.println("cardDetails in checkPoints"+ id+cardNumber);
+		 List<CreditCard> results=jdbcTemplate.query(query ,(rs, rowNum) -> new CreditCard( rs.getInt("customer_id"),rs.getString("credit_card_number")), 
+				 cardNumber);
+		 
+		 return !results.isEmpty();	
+}
+ 
+ public  Integer readCreditPoints(int id,String cardNumber)  {
+	  
+		String query = "SELECT credit_points FROM credit_card_details WHERE customer_id=? AND credit_card_number=?  ";
+		
+		System.out.println("cardDetails in readCreditpoints"+ id+cardNumber);
+				 
+		 return jdbcTemplate.queryForObject(query ,Integer.class, 
+					id, cardNumber);	
+}
  
  public  List<CreditCard> display(CreditCard creditCard) {
 		

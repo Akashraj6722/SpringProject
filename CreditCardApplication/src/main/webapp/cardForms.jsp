@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="header">
+
+		
+			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+		
+
+	</div>
 
 	<div class="details">
 		<form action="occupation" method="post" enctype="multipart/form-data">

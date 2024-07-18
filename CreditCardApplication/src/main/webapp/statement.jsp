@@ -31,10 +31,11 @@
  
 </head>
 <body>
-<div class="header bg-primary text-white text-center p-3 mb-4">
-        <a href="AdminPage.jsp" class="text-white mr-3"><i class="fa-solid fa-arrow-left-long"></i></a>
-        <img alt="logo" src="images/logo-no-background.png" style="width: 150px;">
-    </div>
+<div class="header">
+
+			<img alt="" src="images/logo-no-background.png" style="width: 150px;">
+
+	</div>
 <div>
 <table id="statement" class="table table-striped table-bordered table-light">
   <thead class="thead-dark">
@@ -119,6 +120,21 @@
     
 </body>
 <style>
+
+
+img{
+   margin-top: 4px;
+}
+.header {
+	background-color: rgb(20, 136, 236);
+	color: #fff;
+	height: 75px;
+	margin-top:-42.4%;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
 * {
 	margin: 0%;
 	padding: 0%;
